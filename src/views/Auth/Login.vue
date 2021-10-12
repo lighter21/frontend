@@ -1,11 +1,9 @@
 <template>
-  <h1>asd</h1>
+  <h1>1</h1>
 </template>
 
 <script>
 export default {
-  name: "Home",
-
-  components: {},
+  name: "Login",
 };
 </script>
