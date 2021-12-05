@@ -3,26 +3,32 @@ import App from "@/App.vue";
 import router from "@/router";
 import store from "@/store";
 import vuetify from "@/plugins/vuetify";
+import axios from "axios";
+import VueAxios from "vue-axios";
+import { ApiService } from "@/api/api.service";
+import { CHECK_AUTH } from "@/store/mutations.type";
+import Auth from "@/layouts/Auth";
+import Default from "@/layouts/Default";
+Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
+ApiService.init();
+document.title = "Stuck!";
+Vue.component("Auth", Auth);
+Vue.component("Default", Default);
 
-// TODO: Po implementacji store'a popraw!
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     // this route requires auth, check if logged in
-//     // if not, redirect to login page.
-//     if (!auth.loggedIn()) {
-//       next({
-//         path: '/login',
-//         query: { redirect: to.fullPath }
-//       })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next() // make sure to always call next()!
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  Promise.all([store.dispatch(CHECK_AUTH)]).then(() => {
+    const publicPages = ["Login", "Register"];
+    const isPublicPage = publicPages.includes(to.name);
+    const isAuthPage = !isPublicPage;
+    const isAuthenticated = store.state.auth.isAuthenticated;
+
+    if ((isAuthenticated && isAuthPage) || (!isAuthenticated && isPublicPage)) return next();
+    else if (isAuthenticated && isPublicPage) return next({ name: "Home" });
+    else if (!isAuthenticated && isAuthPage) return next({ name: "Login" });
+  });
+});
 
 new Vue({
   router,
