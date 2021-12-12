@@ -9,6 +9,7 @@ import { ApiService } from "@/api/api.service";
 import { CHECK_AUTH } from "@/store/mutations.type";
 import Auth from "@/layouts/Auth";
 import Default from "@/layouts/Default";
+import { apolloProvider } from "@/vue-apollo";
 Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
@@ -24,7 +25,8 @@ router.beforeEach((to, from, next) => {
     const isAuthPage = !isPublicPage;
     const isAuthenticated = store.state.auth.isAuthenticated;
 
-    if ((isAuthenticated && isAuthPage) || (!isAuthenticated && isPublicPage)) return next();
+    if ((isAuthenticated && isAuthPage) || (!isAuthenticated && isPublicPage))
+      return next();
     else if (isAuthenticated && isPublicPage) return next({ name: "Home" });
     else if (!isAuthenticated && isAuthPage) return next({ name: "Login" });
   });
@@ -34,5 +36,6 @@ new Vue({
   router,
   store,
   vuetify,
+  apolloProvider,
   render: (h) => h(App),
 }).$mount("#app");

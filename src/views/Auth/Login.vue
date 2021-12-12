@@ -39,7 +39,6 @@ export default {
       error: (state) => state.auth.error,
       loading: (state) => state.auth.loading,
       isAuthenticated: (state) => state.auth.isAuthenticated,
-      user: (state) => state.auth.user,
     }),
   },
   data() {

@@ -1,10 +1,12 @@
 <template>
-  <h1>Home page</h1>
+  <div>
+    <post></post>
+  </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
-
+import { mapState } from "vuex";
+import Post from "@/components/Post"
 export default {
   name: "Home",
   computed: {
@@ -15,6 +17,6 @@ export default {
       user: (state) => state.auth.user,
     }),
   },
-  components: {},
+  components: {Post},
 };
 </script>

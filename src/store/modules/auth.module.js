@@ -82,6 +82,7 @@ const mutations = {
   },
 
   [PURGE_AUTH](state) {
+    state.loading = false;
     state.isAuthenticated = false;
     state.user = {};
   },
