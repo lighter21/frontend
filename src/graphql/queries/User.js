@@ -3,7 +3,6 @@ export const GET_USERS = gql`
   query {
     users {
       id
-      asd
     }
   }
 `;

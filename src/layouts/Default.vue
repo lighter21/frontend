@@ -3,9 +3,9 @@
     <v-main>
       <Navbar v-model="showSidebar"></Navbar>
       <Sidebar :show-sidebar="showSidebar"></Sidebar>
-      <v-main>
+      <v-container>
         <router-view></router-view>
-      </v-main>
+      </v-container>
     </v-main>
   </v-app>
 </template>
