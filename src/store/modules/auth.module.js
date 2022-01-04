@@ -19,14 +19,18 @@ const actions = {
   async [REGISTER](context, credentials) {
     context.commit(PURGE_ERRORS);
     context.commit(SET_LOADING, true);
-
-    await ApiService.post("auth/register", credentials)
-      .then((response) => context.commit(SET_AUTH, response.data.user))
-      .catch((response) => {
-        context.commit(PURGE_AUTH);
-        context.commit(SET_ERRORS, response.data.errors);
-      });
-    context.commit(SET_LOADING, false);
+    return new Promise((resolve, reject) => {
+      ApiService.post("auth/register", credentials)
+        .then(({ data }) => {
+          context.commit(SET_AUTH, data.user);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          context.commit(SET_ERRORS, response.data.errors);
+          reject(response);
+        });
+      context.commit(SET_LOADING, false);
+    });
   },
 
   async [LOGIN](context, credentials) {
@@ -41,6 +45,7 @@ const actions = {
         context.commit(SET_LOADING, false);
       })
       .catch(({ response }) => {
+        console.log(response);
         context.commit(SET_ERRORS, response.data.errors);
         context.commit(SET_LOADING, false);
       });

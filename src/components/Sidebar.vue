@@ -32,7 +32,12 @@
 
     <v-divider></v-divider>
     <v-list>
-      <v-list-item v-for="item in headers" :key="item.title" class="ml-4">
+      <v-list-item
+        v-for="item in headers"
+        :key="item.title"
+        class="ml-4"
+        :to="item.to"
+      >
         <v-list-item-icon>
           <v-icon color="white">{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -79,8 +84,12 @@ export default {
     }),
     headers() {
       return [
-        { title: "Home", icon: "mdi-home-city" },
-        { title: "My Account", icon: "mdi-account" },
+        { title: "Home", icon: "mdi-home-city", to: "/" },
+        {
+          title: "My Account",
+          icon: "mdi-account",
+          to: `user/${this.user.username}`,
+        },
         { title: "Users", icon: "mdi-account-group-outline" },
       ];
     },

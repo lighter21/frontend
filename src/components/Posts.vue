@@ -1,9 +1,13 @@
 <template>
-  <div style="width: 100%">
+  <div>
+    <div class="text-center" v-if="!posts">
+      Nie dodano jeszcze żadnych postów. Dodaj pierwszy!
+    </div>
     <v-card
       class="my-3"
       rounded
       outlined
+      :loading="loading"
       dark
       color="#474b5c"
       v-for="post in posts"
@@ -11,15 +15,21 @@
     >
       <v-list-item>
         <v-list-item-avatar>
-          <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+          <img
+            :loading="loading"
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            alt="John"
+          />
         </v-list-item-avatar>
         <v-list-item-content class="mt-2">
           <v-list-item-title class="subtitle">
-            {{
-              post.user.first_name + " " + post.user.last_name
-            }}</v-list-item-title
-          >
-          <!--        <v-list-item-subtitle> {{ post.audience }}</v-list-item-subtitle>-->
+            {{ post.user.first_name + " " + post.user.last_name }}
+          </v-list-item-title>
+          <v-list-item-subtitle class="caption">
+<!--            {{ post.audience }}-->
+            Publiczny
+          {{post.created_at}}
+          </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
           <v-icon>more_horiz</v-icon>
@@ -38,6 +48,7 @@
                 <v-layout>
                   <v-avatar size="20" class="ml-1">
                     <v-img
+                      :loading="loading"
                       src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/facebook/65/blue-heart_1f499.png"
                     >
                     </v-img>
@@ -69,28 +80,19 @@
         </v-layout>
         <v-divider></v-divider>
       </v-card-text>
-      <div class="px-4">
-        <v-text-field
-          dark
-          outlined
-          placeholder="Napisz komentarz..."
-          dense
-        ></v-text-field>
-      </div>
-      <div v-for="comment in post.comments" :key="comment.id">
-        <comment :comment="comment"> </comment>
-      </div>
+      <comments-section :comments="post.comments" :post-id="post.id">
+      </comments-section>
     </v-card>
   </div>
 </template>
 
 <script>
-import Comment from "@/components/Comment";
+import CommentsSection from "@/components/CommentsSection";
 
 export default {
-  name: "Post.vue",
-  components: { Comment },
-  props: ["posts"],
+  name: "Posts",
+  components: { CommentsSection },
+  props: ["posts", "loading"],
 };
 </script>
 

@@ -1,7 +1,28 @@
 <template>
-  <v-card>
+  <v-card dark color="transparent" class="pa-4">
     <v-form @submit.prevent="register" ref="form">
       <v-text-field
+        outlined
+        v-model="credentials.email"
+        placeholder="jankowalski@gmail.com"
+        label="Adres e-mail"
+        dense
+        type="email"
+      >
+      </v-text-field>
+
+      <v-text-field
+        type="username"
+        outlined
+        v-model="credentials.username"
+        placeholder="jan.kowalski"
+        label="Nazwa użytkownika"
+        dense
+      >
+      </v-text-field>
+
+      <v-text-field
+        type=""
         outlined
         v-model="credentials.first_name"
         placeholder="jankowalski@gmail.com"
@@ -24,15 +45,6 @@
         v-model="credentials.last_name"
         placeholder="jankowalski@gmail.com"
         label="Nazwisko"
-        dense
-      >
-      </v-text-field>
-
-      <v-text-field
-        outlined
-        v-model="credentials.email"
-        placeholder="jankowalski@gmail.com"
-        label="Adres e-mail"
         dense
       >
       </v-text-field>
@@ -108,6 +120,7 @@ export default {
           .toISOString()
           .substr(0, 10),
         email: "",
+        username: "",
         password: "",
         password_confirmation: "",
       },
@@ -116,8 +129,10 @@ export default {
   },
   methods: {
     register() {
-      this.$store.dispatch(REGISTER, this.credentials).then(() => {
-        this.$attrs.form.clear();
+      this.$store.dispatch(REGISTER, this.credentials).then((response) => {
+        if (!response.data.errors) {
+          this.$router.push({ name: "Home" });
+        }
       });
     },
   },

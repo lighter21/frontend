@@ -7,7 +7,9 @@ export const CREATE_POST = gql`
       body
       created_at
       comments {
+        id
         body
+        created_at
         user {
           id
           email

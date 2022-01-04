@@ -1,5 +1,6 @@
 <template>
   <v-card
+    :loading="loading"
     rounded
     outlined
     dark
@@ -15,11 +16,13 @@
         <v-row no-gutters>
           <v-avatar class="mr-3">
             <v-img
+              :loading="loading"
               src="https://randomuser.me/api/portraits/women/81.jpg"
             ></v-img>
           </v-avatar>
           <v-text-field
             dense
+            :loading="loading"
             outlined
             placeholder="O czym myślisz, Bartosz?"
             v-model="body"
@@ -30,7 +33,14 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn rounded color="primary" dark @click="createPost">
+      <v-btn
+        :loading="loading"
+        :disabled="body.length < 1"
+        rounded
+        color="primary"
+        dark
+        @click="createPost"
+      >
         Dodaj post
       </v-btn>
     </v-card-actions>
@@ -47,9 +57,6 @@ export default {
 
   computed: {
     ...mapState({
-      error: (state) => state.auth.error,
-      loading: (state) => state.auth.loading,
-      isAuthenticated: (state) => state.auth.isAuthenticated,
       user: (state) => state.auth.user,
     }),
   },
@@ -57,10 +64,12 @@ export default {
     return {
       focused: true,
       body: "",
+      loading: false,
     };
   },
   methods: {
     createPost() {
+      this.loading = true;
       let input = {
         user_id: this.user.id,
         body: this.body,
@@ -91,6 +100,7 @@ export default {
           },
         })
         .then(() => {
+          this.loading = false;
           this.body = "";
         });
     },
