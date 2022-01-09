@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="transparent" app elevate-on-scroll class="white--text">
+  <v-app-bar color="#3d3f50" app elevate-on-scroll class="white--text">
     <v-app-bar-nav-icon
       @click="toggleSidebar"
       class="white--text hidden-sm-and-up"

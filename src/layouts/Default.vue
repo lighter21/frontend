@@ -1,10 +1,12 @@
 <template>
   <v-app class="white--text">
+    <Navbar v-model="showSidebar"></Navbar>
+    <Sidebar :show-sidebar="showSidebar"></Sidebar>
+
     <v-main>
-      <Navbar v-model="showSidebar"></Navbar>
-      <Sidebar :show-sidebar="showSidebar"></Sidebar>
       <v-container>
         <router-view></router-view>
+
       </v-container>
     </v-main>
   </v-app>

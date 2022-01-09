@@ -84,13 +84,26 @@ export default {
     }),
     headers() {
       return [
-        { title: "Home", icon: "mdi-home-city", to: "/" },
         {
-          title: "My Account",
-          icon: "mdi-account",
-          to: `user/${this.user.username}`,
+          title: "Strona główna",
+          icon: "mdi-home-city",
+          to: "/",
         },
-        { title: "Users", icon: "mdi-account-group-outline" },
+        {
+          title: "Moje Konto",
+          icon: "mdi-account",
+          to: `/user/${this.user.username}`,
+        },
+        {
+          title: "Użytkownicy",
+          icon: "mdi-account-multiple",
+          to: "/users",
+        },
+        {
+          title: "Grupy",
+          icon: "mdi-account-group-outline",
+          to: "/groups",
+        },
       ];
     },
   },

@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     async login() {
-      await this.$store.dispatch(LOGIN, this.credentials).then(() => {
+      await this.$store.dispatch(LOGIN, this.credentials)
+          .then(() => {
         if (this.isAuthenticated) this.$router.push({ name: "Home" });
       });
     },
