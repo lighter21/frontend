@@ -13,6 +13,7 @@ export const GET_USER = gql`
       posts {
         id
         body
+        created_at
         user {
           id
           email

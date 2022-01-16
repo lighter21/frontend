@@ -26,7 +26,7 @@
                 <p class="title">
                   {{ getUserFullName(data) }}
                 </p>
-                <v-btn color="primary" small v-if="data.id != me.id">
+                <v-btn color="primary" small v-if="!isMyAccount(data)">
                   Dodaj Znajomego
                 </v-btn>
               </v-row>
@@ -46,7 +46,10 @@
           </v-row>
         </v-col>
       </v-container>
-
+      <create-post
+        v-if="isMyAccount(data)"
+        @create-post="createPost"
+      ></create-post>
       <posts :posts="data.posts" :loading="loading"></posts>
     </template>
   </apollo-query>
@@ -56,10 +59,12 @@
 import { GET_USER } from "@/graphql/queries/User";
 import Posts from "@/components/Posts";
 import { mapState } from "vuex";
+import CreatePost from "@/components/CreatePost";
+import { CREATE_POST } from "@/graphql/mutations/Post";
 
 export default {
-  name: "Profile",
-  components: { Posts },
+  name: "Show",
+  components: { CreatePost, Posts },
   computed: {
     ...mapState({
       me: (state) => state.auth.user,
@@ -71,10 +76,42 @@ export default {
     };
   },
   methods: {
+    createPost(input) {
+      this.$apollo.mutate({
+        mutation: CREATE_POST,
+        variables: {
+          input: input,
+        },
+        update: (store, { data: { createPost } }) => {
+          const { user } = store.readQuery({
+            query: GET_USER,
+            variables: {
+              username: this.$route.params.username,
+            },
+          });
+          const userCopy = Object.assign({}, user);
+          userCopy.posts = [createPost, ...user.posts];
+          store.writeQuery({
+            query: GET_USER,
+            data: {
+              user: userCopy,
+            },
+            variables: {
+              username: this.$route.params.username,
+            },
+          });
+        },
+      });
+    },
     getUserFullName(user) {
-      return `${user.first_name} ${user.second_name ? user.second_name : ''} ${user.last_name}`
-    }
-  }
+      return `${user.first_name} ${user.second_name ? user.second_name : ""} ${
+        user.last_name
+      }`;
+    },
+    isMyAccount(user) {
+      return user.id !== this.me.id;
+    },
+  },
 };
 </script>
 

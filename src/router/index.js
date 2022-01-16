@@ -1,9 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "@/views/Home.vue";
-import Login from "@/views/Auth/Login";
-import Register from "@/views/Auth/Register";
-import Profile from "@/views/User/Profile";
 
 Vue.use(VueRouter);
 
@@ -11,19 +7,19 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    component: () => import("@/views/Auth/Login"),
     meta: { layout: "Auth" },
   },
   {
     path: "/register",
     name: "Register",
-    component: Register,
+    component: () => import("@/views/Auth/Register"),
     meta: { layout: "Auth" },
   },
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import("@/views/Home"),
     meta: { layout: "Default" },
   },
   {
@@ -35,13 +31,19 @@ const routes = [
   {
     path: "/user/:username",
     name: "Account",
-    component: Profile,
+    component: () => import("@/views/User/Show"),
     meta: { layout: "Default" },
   },
   {
     path: "/groups/",
     name: "Groups",
     component: () => import("@/views/Groups/List"),
+    meta: { layout: "Default" },
+  },
+  {
+    path: "/group/:groupId",
+    name: "Group",
+    component: () => import("@/views/Groups/Show"),
     meta: { layout: "Default" },
   },
 ];

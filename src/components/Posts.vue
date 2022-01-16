@@ -31,7 +31,7 @@
             <v-list-item-subtitle class="caption">
               <!--            {{ post.audience }}-->
               Publiczny
-              {{ post.created_at }}
+              {{ " · " + post.created_at }}
             </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
