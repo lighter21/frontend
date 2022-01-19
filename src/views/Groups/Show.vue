@@ -3,6 +3,7 @@
     :query="query"
     :variables="{ id: $route.params.groupId }"
     :update="(data) => data.group"
+    fetch-policy="network-only"
     style="width: 100%"
   >
     <template v-slot="{ result: { loading, error, data } }">
@@ -25,7 +26,7 @@
             <v-col>
               <v-row no-gutters justify="space-between">
                 <span class="display-1 d-block">{{ data.name }}</span>
-                <v-btn color="success" @click="joinGroup">
+                <v-btn color="success" @click="joinGroup" :loading="loading">
                   <v-icon> mdi-plus </v-icon>
                   Dołącz
                 </v-btn>
@@ -86,7 +87,7 @@ export default {
             store.writeQuery({
               query: GET_GROUP,
               data: {
-                user: groupCopy,
+                group: groupCopy,
               },
               variables: {
                 id: this.$route.params.groupId,
