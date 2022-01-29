@@ -11,7 +11,10 @@
         Wystąpił nieoczekiwany błąd - spróbuj odświeżyć stronę
       </div>
       <v-card dark rounded color="#474b5c">
-        <v-card-title>Grupy</v-card-title>
+        <v-card-title>
+          Grupy
+          <create-modal></create-modal>
+        </v-card-title>
         <v-card-text>
           <div v-for="group in data" :key="group.id">
             <v-layout>
@@ -53,9 +56,11 @@
 
 <script>
 import { GET_GROUPS } from "@/graphql/queries/Group";
+import CreateModal from "@/views/Groups/CreateModal";
 
 export default {
   name: "List",
+  components: { CreateModal },
   data() {
     return {
       query: GET_GROUPS,

@@ -8,3 +8,13 @@ export const ATTACH_POST_TO_GROUP = gql`
     }
   }
 `;
+
+export const CREATE_GROUP = gql`
+  mutation Group($input: CreateGroupInput) {
+    createGroup(input: $input) {
+      id
+      name
+      description
+    }
+  }
+`;
