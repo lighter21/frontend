@@ -23,9 +23,9 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
 
-    <v-btn icon>
-      <v-icon color="white">mdi-heart</v-icon>
-    </v-btn>
+
+    <notifications>
+    </notifications>
 
     <v-btn icon>
       <v-icon color="white">mdi-dots-vertical</v-icon>
@@ -34,8 +34,10 @@
 </template>
 
 <script>
+import Notifications from "@/components/Notifications";
 export default {
   name: "Navbar",
+  components: {Notifications},
   props: ["value"],
   methods: {
     toggleSidebar() {

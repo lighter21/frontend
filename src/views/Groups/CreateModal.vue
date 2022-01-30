@@ -4,6 +4,7 @@
       <v-btn
         color="primary"
         dark
+        :loading="$apolloGlobalLoading"
         v-bind="attrs"
         v-on="on"
         fab
@@ -21,6 +22,7 @@
           <v-text-field
             v-model="group.name"
             solo
+            :loading="$apolloGlobalLoading"
             outlined
             dark
             label="Nazwa grupy"
@@ -29,6 +31,7 @@
           <v-text-field
             v-model="group.description"
             solo
+            :loading="$apolloGlobalLoading"
             outlined
             dark
             label="Opis grupy"
@@ -38,6 +41,7 @@
           <v-select
             v-model="group.privacy"
             :items="privacyType"
+            :loading="$apolloGlobalLoading"
             item-text="name"
             item-value="value"
             label="Ustawienia prywatności"
@@ -50,10 +54,22 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="dialog = false">
+        <v-btn
+          color="green darken-1"
+          text
+          @click="dialog = false"
+          :loading="$apolloGlobalLoading"
+        >
           Zamknij
         </v-btn>
-        <v-btn color="green darken-1" text @click="create()"> Dodaj </v-btn>
+        <v-btn
+          color="green darken-1"
+          :loading="$apolloGlobalLoading"
+          text
+          @click="create()"
+        >
+          Dodaj
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

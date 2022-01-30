@@ -3,10 +3,7 @@
     <div class="text-center ma-4 text-h6" v-if="posts.length === 0">
       Nie dodano jeszcze żadnych postów.
     </div>
-    <div v-if="loading" class="text-center">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </div>
-    <div v-if="!loading">
+    <div>
       <v-card
         class="my-3"
         rounded
@@ -18,11 +15,7 @@
       >
         <v-list-item>
           <v-list-item-avatar>
-            <img
-              :loading="loading"
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
-            />
+            <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
           </v-list-item-avatar>
           <v-list-item-content class="mt-2">
             <v-list-item-title class="subtitle">
@@ -51,7 +44,6 @@
                   <v-layout>
                     <v-avatar size="20" class="ml-1">
                       <v-img
-                        :loading="loading"
                         src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/facebook/65/blue-heart_1f499.png"
                       >
                       </v-img>
@@ -96,7 +88,7 @@ import CommentsSection from "@/components/CommentsSection";
 export default {
   name: "Posts",
   components: { CommentsSection },
-  props: ["posts", "loading"],
+  props: ["posts"],
 };
 </script>
 

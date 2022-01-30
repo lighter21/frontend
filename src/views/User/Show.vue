@@ -2,21 +2,19 @@
   <apollo-query
     :query="query"
     :variables="{ username: $route.params.username }"
-    :update="(data) => data.user"
     style="width: 100%"
+    :update="(data) => data.user"
   >
     <template v-slot="{ result: { loading, error, data } }">
-      <div v-if="loading">LOUDING</div>
       <div v-if="error">
         Wystąpił nieoczekiwany błąd - spróbuj odświeżyć stronę
       </div>
-
       <v-container>
         <v-col lg="6" md="8" sm="12" align-self="center" class="mx-auto">
           <v-row>
             <v-avatar size="200" color="primary" class="fill-height my-auto">
               <img
-                :loading="loading"
+                :$apolloGlobalLoading="$apolloGlobalLoading"
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
               />
@@ -26,13 +24,20 @@
                 <p class="title">
                   {{ getUserFullName(data) }}
                 </p>
-                <v-btn color="primary" small v-if="!isMyAccount(data)">
+                <v-btn
+                  color="primary"
+                  :$apolloGlobalLoading="$apolloGlobalLoading"
+                  small
+                  v-if="!isMyAccount(data)"
+                >
                   Dodaj Znajomego
                 </v-btn>
               </v-row>
 
               <v-row class="my-3">
-                <div class="subtitle-1">{{ data.posts.length }} postów</div>
+                <div class="subtitle-1" v-if="!$apolloGlobalLoading">
+                  {{ data.posts.length }} postów
+                </div>
                 <div class="mx-4 subtitle-1">88 Znajomych</div>
                 <div class="subtitle-1">7 Zdjęć</div>
               </v-row>
@@ -50,7 +55,13 @@
         v-if="isMyAccount(data)"
         @create-post="createPost"
       ></create-post>
-      <posts :posts="data.posts" :loading="loading"></posts>
+      <div v-if="$apolloGlobalLoading" class="text-center">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
+      </div>
+      <posts :posts="data.posts" v-if="!$apolloGlobalLoading"></posts>
     </template>
   </apollo-query>
 </template>

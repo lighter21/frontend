@@ -6,7 +6,6 @@
     style="width: 100%"
   >
     <template v-slot="{ result: { loading, error, data } }">
-      <div v-if="loading">LOUDING</div>
       <div v-if="error">
         Wystąpił nieoczekiwany błąd - spróbuj odświeżyć stronę
       </div>
@@ -16,6 +15,13 @@
           <create-modal></create-modal>
         </v-card-title>
         <v-card-text>
+          <div v-if="$apolloGlobalLoading" class="text-center">
+            <v-progress-circular
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+
           <div v-for="group in data" :key="group.id">
             <v-layout>
               <router-link
@@ -24,7 +30,7 @@
               >
                 <v-avatar size="75" color="primary">
                   <v-img
-                    :loading="loading"
+                    :loading="$apolloGlobalLoading"
                     src="https://cdn.vuetifyjs.com/images/john.jpg"
                     alt="John"
                   />
