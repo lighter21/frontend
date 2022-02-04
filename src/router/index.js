@@ -49,6 +49,9 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  scrollBehavior() {
+    return window.scrollTo({top: 0, behavior: 'smooth'});
+  },
   mode: "history",
   base: process.env.BASE_URL,
   routes,

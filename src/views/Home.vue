@@ -4,19 +4,7 @@
       <create-post @create-post="createPost"></create-post>
     </v-row>
     <v-row>
-      <apollo-query
-        :query="query"
-        :variables="{ user_id: user.id }"
-        :update="(data) => data.timeline"
-        v-slot="{ result: { loading, error, data } }"
-        style="width: 100%"
-      >
-        <div v-if="loading">LOUDING</div>
-        <div v-if="error">
-          Wystąpił nieoczekiwany błąd - spróbuj odświeżyć stronę
-        </div>
-        <posts :posts="data" :loading="loading"></posts>
-      </apollo-query>
+      <posts :posts="timeline"></posts>
     </v-row>
   </v-col>
 </template>
@@ -30,6 +18,17 @@ import { CREATE_POST } from "@/graphql/mutations/Post";
 
 export default {
   name: "Home",
+  apollo: {
+    timeline: {
+      query: GET_TIMELINE,
+      variables() {
+        return {
+          user_id: this.user.id,
+        };
+      },
+      update: (data) => data.timeline,
+    },
+  },
   computed: {
     ...mapState({
       user: (state) => state.auth.user,
@@ -39,6 +38,7 @@ export default {
   data() {
     return {
       query: GET_TIMELINE,
+      timeline: [],
     };
   },
   methods: {

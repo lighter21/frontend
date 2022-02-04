@@ -56,5 +56,4 @@ export const apolloProvider = new VueApollo({
     apolloState.loading += countModifier;
     console.log("Global loading", apolloState.loading, countModifier);
   },
-  // defaultOptions: { notifyOnNetworkStatusChange: true },
 });

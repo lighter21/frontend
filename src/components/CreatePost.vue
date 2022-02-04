@@ -1,6 +1,6 @@
 <template>
   <v-card
-    :loading="loading"
+    :loading="$apolloGlobalLoading"
     rounded
     outlined
     dark
@@ -16,13 +16,13 @@
         <v-row no-gutters>
           <v-avatar class="mr-3">
             <v-img
-              :loading="$apollo.loading"
+              :loading="$apolloGlobalLoading"
               src="https://randomuser.me/api/portraits/women/81.jpg"
             ></v-img>
           </v-avatar>
           <v-text-field
             dense
-            :loading="$apollo.loading"
+            :loading="$apolloGlobalLoading"
             outlined
             placeholder="O czym myślisz, Bartosz?"
             v-model="body"
@@ -34,7 +34,7 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn
-        :loading="$apollo.loading"
+        :loading="$apolloGlobalLoading"
         :disabled="body.length < 1"
         rounded
         color="primary"

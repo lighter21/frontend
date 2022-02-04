@@ -3,7 +3,7 @@
     <div class="text-center ma-4 text-h6" v-if="posts.length === 0">
       Nie dodano jeszcze żadnych postów.
     </div>
-    <div>
+    <div v-if="posts.length > 0">
       <v-card
         class="my-3"
         rounded
@@ -12,9 +12,10 @@
         color="#474b5c"
         v-for="post in posts"
         :key="post.id"
+        :loading="$apolloGlobalLoading"
       >
         <v-list-item>
-          <v-list-item-avatar>
+          <v-list-item-avatar >
             <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
           </v-list-item-avatar>
           <v-list-item-content class="mt-2">
