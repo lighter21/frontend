@@ -3,7 +3,7 @@
     <div class="text-center ma-4 text-h6" v-if="posts.length === 0">
       Nie dodano jeszcze żadnych postów.
     </div>
-    <div v-if="posts.length > 0">
+    <div v-if="posts">
       <v-card
         class="my-3"
         rounded

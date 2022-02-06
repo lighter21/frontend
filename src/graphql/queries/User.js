@@ -51,3 +51,19 @@ export const GET_USERS_LIST = gql`
     }
   }
 `;
+
+export const GET_USER_FRIENDS = gql`
+  query User($username: String) {
+    user(username: $username) {
+      friends {
+        id
+        email
+        username
+        first_name
+        second_name
+        last_name
+        birth_date
+      }
+    }
+  }
+`;

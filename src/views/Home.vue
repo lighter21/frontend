@@ -3,9 +3,7 @@
     <v-row>
       <create-post @create-post="createPost"></create-post>
     </v-row>
-    <v-row>
-      <posts :posts="timeline"></posts>
-    </v-row>
+    <posts :posts="timeline"></posts>
   </v-col>
 </template>
 
