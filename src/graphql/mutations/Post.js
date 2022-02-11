@@ -28,3 +28,11 @@ export const CREATE_POST = gql`
     }
   }
 `;
+
+export const TOGGLE_LIKE = gql`
+  mutation Like($post_id: ID!, $user_id: ID!) {
+    ToggleLike(post_id: $post_id, user_id: $user_id) {
+      id
+    }
+  }
+`;

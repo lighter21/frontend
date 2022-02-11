@@ -27,7 +27,7 @@
               <v-row no-gutters justify="space-between">
                 <span class="display-1 d-block">{{ data.name }}</span>
                 <v-btn color="success" @click="joinGroup" :loading="loading">
-                  <v-icon> mdi-plus </v-icon>
+                  <v-icon> mdi-plus</v-icon>
                   Dołącz
                 </v-btn>
               </v-row>
@@ -44,20 +44,21 @@
         </v-col>
       </v-container>
       <create-post @create-post="createPost"></create-post>
-      <posts :posts="data.posts" :loading="loading"></posts>
+      <posts-section :posts="data.posts" :loading="loading"></posts-section>
     </template>
   </apollo-query>
 </template>
 
 <script>
-import Posts from "@/components/Posts";
 import { GET_GROUP } from "@/graphql/queries/Group";
 import CreatePost from "@/components/CreatePost";
 import { CREATE_POST } from "@/graphql/mutations/Post";
 import { ATTACH_POST_TO_GROUP } from "@/graphql/mutations/Group";
+import PostsSection from "@/components/PostsSection";
+
 export default {
   name: "Show",
-  components: { CreatePost, Posts },
+  components: { PostsSection, CreatePost },
   data() {
     return {
       query: GET_GROUP,

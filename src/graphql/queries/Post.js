@@ -22,6 +22,9 @@ export const GET_TIMELINE = gql`
         second_name
         last_name
       }
+      likes {
+        id
+      }
     }
   }
 `;

@@ -25,10 +25,17 @@
     </v-card-title>
     <v-card-actions>
       <v-col class="ma-">
-        <v-btn color="primary" class="mb-2 mt-n4" block @click="addFriend">
+        <v-btn
+          color="primary"
+          class="mb-2 mt-n4"
+          block
+          @click="sendFriendsInvitation"
+        >
           Dodaj do znajomych
         </v-btn>
-        <v-btn color="" block :to="`/user/${user.username}`"> Zobacz profil</v-btn>
+        <v-btn color="" block :to="`/user/${user.username}`"
+          >Zobacz profil</v-btn
+        >
       </v-col>
     </v-card-actions>
   </v-card>
@@ -36,7 +43,8 @@
 
 <script>
 import { mapState } from "vuex";
-import { CREATE_RELATIONSHIP } from "@/graphql/mutations/Relationship";
+import { StatusType } from "../../../enums/StatusType";
+import { UPDATE_OR_CREATE_FRIEND } from "@/graphql/mutations/User";
 
 export default {
   name: "ProfileCard",
@@ -51,18 +59,13 @@ export default {
     }),
   },
   methods: {
-    addFriend() {
-      let payload = {
-        user_first_id: this.me.id,
-        user_second_id: this.user.id,
-        type: "FRIEND",
-        status: "PENDING",
-      };
-
+    sendFriendsInvitation() {
       this.$apollo.mutate({
-        mutation: CREATE_RELATIONSHIP,
+        mutation: UPDATE_OR_CREATE_FRIEND,
         variables: {
-          input: payload,
+          id: this.me.id,
+          friend_id: this.user.id,
+          status: StatusType.Pending.status,
         },
       });
     },

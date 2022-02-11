@@ -20,11 +20,22 @@
               </p>
               <v-btn
                 color="primary"
-                :$apolloGlobalLoading="$apolloGlobalLoading"
+                :loading="$apolloGlobalLoading"
                 small
-                v-if="!isMyAccount(user)"
+                v-if="!isMyAccount() && !isAlreadyInvited"
+                @click="addToFriendsList"
               >
                 Dodaj Znajomego
+              </v-btn>
+
+              <v-btn
+                color="primary"
+                :loading="$apolloGlobalLoading"
+                small
+                v-if="!isMyAccount() && isAlreadyInvited"
+                @click="cancelInvitation"
+              >
+                Anuluj zaproszenie
               </v-btn>
             </v-row>
 
@@ -52,20 +63,23 @@
     <div v-if="$apolloGlobalLoading" class="text-center">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </div>
-    <posts :posts="user.posts"></posts>
+    <posts-section :posts="user.posts"></posts-section>
   </div>
 </template>
 
 <script>
 import { GET_USER } from "@/graphql/queries/User";
-import Posts from "@/components/Posts";
 import { mapState } from "vuex";
 import CreatePost from "@/components/CreatePost";
 import { CREATE_POST } from "@/graphql/mutations/Post";
+import { UPDATE_OR_CREATE_FRIEND } from "@/graphql/mutations/User";
+import { StatusType } from "../../../enums/StatusType";
+import { CHECK_AUTH } from "@/store/mutations.type";
+import PostsSection from "@/components/PostsSection";
 
 export default {
   name: "Show",
-  components: { CreatePost, Posts },
+  components: {PostsSection, CreatePost },
   apollo: {
     user: {
       query: GET_USER,
@@ -81,6 +95,9 @@ export default {
     ...mapState({
       me: (state) => state.auth.user,
     }),
+    isAlreadyInvited: function () {
+      return this.me.send_invitations.some((item) => item.id == this.user.id);
+    },
   },
   data() {
     return {
@@ -115,13 +132,41 @@ export default {
         },
       });
     },
+    addToFriendsList() {
+      this.$apollo
+        .mutate({
+          mutation: UPDATE_OR_CREATE_FRIEND,
+          variables: {
+            id: this.me.id,
+            friend_id: this.user.id,
+            status: StatusType.Pending.status,
+          },
+        })
+        .then(() => {
+          this.$store.dispatch(CHECK_AUTH);
+        });
+    },
+    cancelInvitation() {
+      this.$apollo
+        .mutate({
+          mutation: UPDATE_OR_CREATE_FRIEND,
+          variables: {
+            id: this.me.id,
+            friend_id: this.user.id,
+            status: StatusType.Canceled.status,
+          },
+        })
+        .then(() => {
+          this.$store.dispatch(CHECK_AUTH);
+        });
+    },
     getUserFullName() {
       return `${this.user.first_name} ${
         this.user.second_name ? this.user.second_name : ""
       } ${this.user.last_name}`;
     },
-    isMyAccount(user) {
-      return user.id !== this.me.id;
+    isMyAccount() {
+      return this.user.id == this.me.id;
     },
   },
 };

@@ -3,16 +3,16 @@
     <v-row>
       <create-post @create-post="createPost"></create-post>
     </v-row>
-    <posts :posts="timeline"></posts>
+    <posts-section :posts="timeline"></posts-section>
   </v-col>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import Posts from "@/components/Posts";
 import CreatePost from "@/components/CreatePost";
 import { GET_TIMELINE } from "@/graphql/queries/Post";
 import { CREATE_POST } from "@/graphql/mutations/Post";
+import PostsSection from "@/components/PostsSection";
 
 export default {
   name: "Home",
@@ -32,7 +32,7 @@ export default {
       user: (state) => state.auth.user,
     }),
   },
-  components: { CreatePost, Posts },
+  components: { PostsSection, CreatePost },
   data() {
     return {
       query: GET_TIMELINE,

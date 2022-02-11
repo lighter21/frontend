@@ -18,12 +18,12 @@
 
         <div
           class="text-center text-body-2 my-4"
-          v-if="user.invitations.length === 0"
+          v-if="user.received_invitations.length === 0"
         >
           Brak nowych powiadomień
         </div>
 
-        <template v-for="(item, index) in user.invitations">
+        <template v-for="(item, index) in user.received_invitations">
           <v-list-item :key="index">
             <v-list-item-avatar>
               <v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
