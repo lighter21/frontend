@@ -30,7 +30,7 @@ const routes = [
   },
   {
     path: "/user/:username",
-    name: "Account",
+    name: "User",
     component: () => import("@/views/User/Show"),
     meta: { layout: "Default" },
   },
@@ -46,11 +46,18 @@ const routes = [
     component: () => import("@/views/Groups/Show"),
     meta: { layout: "Default" },
   },
+  {
+    path: "/account/details/:tab",
+    name: "AccountDetails",
+    props: true,
+    component: () => import("@/views/Account/Details"),
+    meta: { layout: "Default" },
+  },
 ];
 
 const router = new VueRouter({
   scrollBehavior() {
-    return window.scrollTo({top: 0, behavior: 'smooth'});
+    return window.scrollTo({ top: 0, behavior: "smooth" });
   },
   mode: "history",
   base: process.env.BASE_URL,

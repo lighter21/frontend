@@ -67,7 +67,7 @@
             >
               <v-icon left dark :color="color"> mdi-thumb-up-outline</v-icon>
               <span v-if="!isLiked"> Lubię to!</span>
-              <span v-if="isLiked" class="blue--text"> Nie lubię</span>
+              <span v-if="isLiked" class="blue--text"> Lubię to!</span>
             </v-btn>
           </v-layout>
 

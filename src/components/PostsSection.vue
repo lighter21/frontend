@@ -11,7 +11,7 @@
       color="primary"
     ></v-progress-circular>
 
-    <div v-for="post in posts" :key="post.id">
+    <div v-for="post in posts" :key="post.id" style="width: 100%">
       <post :post="post"></post>
     </div>
   </div>

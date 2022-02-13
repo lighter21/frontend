@@ -23,21 +23,18 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
 
-
-    <notifications>
-    </notifications>
-
-    <v-btn icon>
-      <v-icon color="white">mdi-dots-vertical</v-icon>
-    </v-btn>
+    <notifications> </notifications>
+    <user-menu> </user-menu>
   </v-app-bar>
 </template>
 
 <script>
 import Notifications from "@/components/Notifications";
+import UserMenu from "@/components/UserMenu";
+
 export default {
   name: "Navbar",
-  components: {Notifications},
+  components: { UserMenu, Notifications },
   props: ["value"],
   methods: {
     toggleSidebar() {

@@ -9,3 +9,11 @@ export const UPDATE_OR_CREATE_FRIEND = gql`
     }
   }
 `;
+
+export const UPDATE_USER_GENERAL_DATA = gql`
+  mutation User($id: ID!, $input: UpdateUserGeneralDataInput!) {
+    updateUserGeneralData(id: $id, input: $input) {
+      id
+    }
+  }
+`;

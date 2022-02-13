@@ -39,10 +39,11 @@ const httpLink = createHttpLink({
 });
 
 // Cache implementation
-const cache = new InMemoryCache({ freezeResults: true });
+const cache = new InMemoryCache({ freezeResults: false });
 
 // Create the apollo client
 const apolloClient = new ApolloClient({
+  //TODO: Sprawdzić czy nie zniszczy mutacji
   assumeImmutableResults: true,
   link: authLink.concat(httpLink),
   cache,

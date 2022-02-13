@@ -38,6 +38,18 @@ export const GET_USER = gql`
   }
 `;
 
+export const GET_USER_GENERAL_DATA = gql`
+  query User($username: String) {
+    user(username: $username) {
+      email
+      first_name
+      second_name
+      last_name
+      birth_date
+    }
+  }
+`;
+
 export const GET_USERS_LIST = gql`
   query User {
     users {
