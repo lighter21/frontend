@@ -2,7 +2,7 @@
   <v-app class="white--text">
     <Navbar v-model="showSidebar"></Navbar>
     <Sidebar :show-sidebar="showSidebar"></Sidebar>
-
+    <FlashMessage :position="'right bottom'"></FlashMessage>
     <v-main>
       <v-container>
         <router-view></router-view>

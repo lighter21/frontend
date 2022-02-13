@@ -11,6 +11,8 @@ import Auth from "@/layouts/Auth";
 import Default from "@/layouts/Default";
 import { apolloProvider } from "@/vue-apollo";
 Vue.use(VueAxios, axios);
+import FlashMessage from "@smartweb/vue-flash-message";
+Vue.use(FlashMessage);
 
 Vue.config.productionTip = false;
 ApiService.init();

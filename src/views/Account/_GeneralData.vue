@@ -130,6 +130,10 @@ export default {
           id: this.me.id,
           input: input,
         },
+      }).then(() => {
+        this.flashMessage.success({
+          message: 'Zapisano pomyślnie!'
+        });
       });
     },
   },

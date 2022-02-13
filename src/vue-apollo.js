@@ -35,7 +35,7 @@ Vue.mixin({
 
 const httpLink = createHttpLink({
   uri: "http://api.stuck.loc/graphql", // The graphql endpoint url
-  credentials: "same-origin",
+  credentials: "include",
 });
 
 // Cache implementation

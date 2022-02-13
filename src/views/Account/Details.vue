@@ -1,6 +1,12 @@
 <template>
   <v-card>
-    <v-tabs v-model="tab" centered background-color="#282b35" dark icons-and-text>
+    <v-tabs
+      v-model="tab"
+      centered
+      background-color="#282b35"
+      dark
+      icons-and-text
+    >
       <v-tabs-slider></v-tabs-slider>
 
       <v-tab :to="getTabRouteObject('general')">
@@ -8,14 +14,9 @@
         <v-icon>mdi-account</v-icon>
       </v-tab>
 
-      <v-tab :to="getTabRouteObject('contact')">
-        Kontaktowe
-        <v-icon>mdi-phone</v-icon>
-      </v-tab>
-
-      <v-tab :to="getTabRouteObject('education')">
-        Edukacja
-        <v-icon>mdi-school-outline</v-icon>
+      <v-tab :to="getTabRouteObject('password')">
+        Zmiana hasła
+        <v-icon>mdi-lock</v-icon>
       </v-tab>
     </v-tabs>
 
@@ -23,11 +24,8 @@
       <v-tab-item :value="getTabRoutePath('general')">
         <general-data> </general-data>
       </v-tab-item>
-      <v-tab-item :value="getTabRoutePath('contact')">
-        <contact-data></contact-data>
-      </v-tab-item>
-      <v-tab-item :value="getTabRoutePath('education')">
-        <education-data></education-data>
+      <v-tab-item :value="getTabRoutePath('password')">
+        <password-change> </password-change>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -35,11 +33,10 @@
 
 <script>
 import GeneralData from "@/views/Account/_GeneralData";
-import ContactData from "@/views/Account/_ContactData";
-import EducationData from "@/views/Account/_EducationData";
+import PasswordChange from "@/views/Account/_PasswordChange";
 export default {
   name: "Details",
-  components: { EducationData, ContactData, GeneralData },
+  components: { PasswordChange, GeneralData },
   data() {
     return {
       tab: null,

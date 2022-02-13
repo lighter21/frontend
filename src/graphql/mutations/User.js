@@ -17,3 +17,11 @@ export const UPDATE_USER_GENERAL_DATA = gql`
     }
   }
 `;
+
+export const CHANGE_USER_PASSWORD = gql`
+  mutation User($input: ChangePasswordInput!) {
+    ChangeUserPassword(input: $input) {
+      id
+    }
+  }
+`;
