@@ -78,6 +78,18 @@
             </v-btn>
           </v-date-picker>
         </v-menu>
+
+        <v-divider></v-divider>
+
+        <v-card-subtitle> Zdjęcie profilowe </v-card-subtitle>
+        <v-file-input
+          v-model="files"
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Wybierz swój avatar"
+          prepend-icon="mdi-camera"
+          label="Avatar"
+        ></v-file-input>
+
         <v-btn class="mr-4" type="submit" color="primary"> Zapisz</v-btn>
         <v-btn @click="$refs.form.clear()" color="secondary"> Wyczyść</v-btn>
       </form>
@@ -89,6 +101,7 @@
 import { GET_USER_GENERAL_DATA } from "@/graphql/queries/User";
 import { mapState } from "vuex";
 import { UPDATE_USER_GENERAL_DATA } from "@/graphql/mutations/User";
+import { UPLOAD_IMAGES } from "@/graphql/mutations/Image";
 
 export default {
   name: "GeneralData",
@@ -118,23 +131,42 @@ export default {
         birth_date: "",
       },
       menu: false,
+      files: [],
     };
   },
   methods: {
     submit() {
       let input = Object.assign({}, this.userGeneralData);
       delete input.__typename;
-      this.$apollo.mutate({
-        mutation: UPDATE_USER_GENERAL_DATA,
-        variables: {
-          id: this.me.id,
-          input: input,
-        },
-      }).then(() => {
-        this.flashMessage.success({
-          message: 'Zapisano pomyślnie!'
+      this.uploadFiles();
+      this.$apollo
+        .mutate({
+          mutation: UPDATE_USER_GENERAL_DATA,
+          variables: {
+            id: this.me.id,
+            input: input,
+          },
+        })
+        .then(() => {
+          this.flashMessage.success({
+            message: "Zapisano pomyślnie!",
+          });
         });
-      });
+    },
+    uploadFiles() {
+      if (this.files) {
+        this.$apollo.mutate({
+          mutation: UPLOAD_IMAGES,
+          variables: {
+            id: this.me.id,
+            type: "App\\User",
+            files: this.files,
+          },
+          context: {
+            hasUpload: true,
+          },
+        });
+      }
     },
   },
 };
