@@ -11,6 +11,7 @@ export const GET_USER = gql`
       last_name
       birth_date
       created_at
+      avatar
       posts {
         id
         body
@@ -93,6 +94,7 @@ export const GET_USER_SUGGESTED_FRIENDS = gql`
       second_name
       last_name
       birth_date
+      avatar
     }
   }
 `;

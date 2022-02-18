@@ -9,6 +9,10 @@
         <div v-for="user in suggestedFriends" :key="user.id">
           <profile-card :user="user"></profile-card>
         </div>
+
+        <div v-if="(!suggestedFriends || suggestedFriends.length === 0) && !$apolloGlobalLoading" class="mx-auto my-6">
+          Nie znaleziono potencjalnych znajomych. Spróbuj ponownie później.
+        </div>
       </v-row>
     </v-col>
   </div>
