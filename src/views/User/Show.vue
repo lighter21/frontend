@@ -6,13 +6,7 @@
     <v-container>
       <v-col lg="6" md="8" sm="12" align-self="center" class="mx-auto">
         <v-row>
-          <v-avatar size="200" color="primary" class="fill-height my-auto">
-            <img
-              :loading="$apolloGlobalLoading"
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
-            />
-          </v-avatar>
+
           <v-col class="mx-6" align-self="center">
             <v-row justify="space-between">
               <p class="title">

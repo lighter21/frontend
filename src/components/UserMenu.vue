@@ -18,7 +18,7 @@
         <v-list dark color="#474b5c">
           <v-list-item>
             <v-list-item-avatar>
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+              <img :src="user.avatar" alt="John" />
             </v-list-item-avatar>
 
             <v-list-item-content>

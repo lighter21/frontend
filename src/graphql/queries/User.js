@@ -46,6 +46,7 @@ export const GET_USER_GENERAL_DATA = gql`
       second_name
       last_name
       birth_date
+      avatar
     }
   }
 `;

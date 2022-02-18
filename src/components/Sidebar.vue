@@ -17,7 +17,7 @@
         <v-row justify="center">
           <v-avatar color="grey" size="86">
             <v-img
-              src="https://randomuser.me/api/portraits/women/81.jpg"
+              :src="user.avatar"
             ></v-img>
           </v-avatar>
         </v-row>

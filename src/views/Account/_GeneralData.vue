@@ -1,11 +1,11 @@
 <template>
   <v-card dark class="pa-4" color="#474b5c" elevation="4">
-    <v-card-title> Informacje o Tobie </v-card-title>
+    <v-card-title> Informacje o Tobie</v-card-title>
     <v-card-subtitle>
       W dowolnej chwili możesz wyświetlić i zmienić informacje o sobie.
     </v-card-subtitle>
     <v-card-text>
-      <form @submit.prevent="submit" ref="form">
+      <form @submit.prevent="submit">
         <v-text-field
           v-model="userGeneralData.first_name"
           :counter="50"
@@ -66,8 +66,8 @@
               :loading="$apolloGlobalLoading"
               @click="menu = false"
             >
-              Zamknij</v-btn
-            >
+              Zamknij
+            </v-btn>
             <v-btn
               text
               color="primary"
@@ -81,17 +81,27 @@
 
         <v-divider></v-divider>
 
-        <v-card-subtitle> Zdjęcie profilowe </v-card-subtitle>
-        <v-file-input
-          v-model="files"
-          accept="image/png, image/jpeg, image/bmp"
-          placeholder="Wybierz swój avatar"
-          prepend-icon="mdi-camera"
-          label="Avatar"
-        ></v-file-input>
+        <v-card-subtitle> Zdjęcie profilowe</v-card-subtitle>
+
+        <v-row class="my-4">
+          <v-avatar size="100" color="primary" class="fill-height my-auto">
+            <img
+              :loading="$apolloGlobalLoading"
+              :src="userGeneralData.avatar"
+              alt="John"
+            />
+          </v-avatar>
+          <v-file-input
+            class="ml-6 my-auto"
+            v-model="file"
+            accept="image/png, image/jpeg, image/bmp"
+            placeholder="Wybierz swój avatar"
+            prepend-icon="mdi-camera"
+            label="Avatar"
+          ></v-file-input>
+        </v-row>
 
         <v-btn class="mr-4" type="submit" color="primary"> Zapisz</v-btn>
-        <v-btn @click="$refs.form.clear()" color="secondary"> Wyczyść</v-btn>
       </form>
     </v-card-text>
   </v-card>
@@ -101,7 +111,7 @@
 import { GET_USER_GENERAL_DATA } from "@/graphql/queries/User";
 import { mapState } from "vuex";
 import { UPDATE_USER_GENERAL_DATA } from "@/graphql/mutations/User";
-import { UPLOAD_IMAGES } from "@/graphql/mutations/Image";
+import { uploadImage } from "@/graphql/mutations/Image";
 
 export default {
   name: "GeneralData",
@@ -129,16 +139,29 @@ export default {
         second_name: "",
         last_name: "",
         birth_date: "",
+        avatar: "",
       },
       menu: false,
-      files: [],
+      file: undefined,
+      uploading: false,
     };
   },
   methods: {
     submit() {
+      if (this.file) {
+        this.uploadFile().then(() => {
+          this.saveUserGeneralData();
+        });
+      } else {
+        this.saveUserGeneralData();
+      }
+
+      this.$router.push({name: "Home"})
+    },
+
+    saveUserGeneralData() {
       let input = Object.assign({}, this.userGeneralData);
       delete input.__typename;
-      this.uploadFiles();
       this.$apollo
         .mutate({
           mutation: UPDATE_USER_GENERAL_DATA,
@@ -153,20 +176,19 @@ export default {
           });
         });
     },
-    uploadFiles() {
-      if (this.files) {
-        this.$apollo.mutate({
-          mutation: UPLOAD_IMAGES,
-          variables: {
-            id: this.me.id,
-            type: "App\\User",
-            files: this.files,
-          },
-          context: {
-            hasUpload: true,
-          },
-        });
-      }
+
+    uploadFile() {
+      this.uploading = true;
+      return uploadImage(this.me.id, "App\\User", this.file).then(
+        ({ data }) => {
+          if (!data.errors) {
+            this.uploading = false;
+            this.userGeneralData.avatar = data.data.UploadImage.path;
+          } else {
+            this.uploading = false;
+          }
+        }
+      );
     },
   },
 };

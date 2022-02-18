@@ -17,7 +17,7 @@
 
     <v-img
       height="200"
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+      :src="user.avatar"
     ></v-img>
 
     <v-card-title class="text-h6"

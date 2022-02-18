@@ -1,6 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import { print } from 'graphql';
 
 export const ApiService = {
   init() {
@@ -22,5 +23,29 @@ export const ApiService = {
   },
   post(endpoint, payload) {
     return Vue.axios.post(endpoint, payload);
+  },
+
+  graphqlUploadQuery(resource, queryBody, queryVariables = {}, file = null) {
+    let operations = {
+      query: print(queryBody),
+      variables: queryVariables,
+    };
+    let map = {
+      0: ["variables.file"],
+    };
+
+    let formData = new FormData();
+    formData.append("operations", JSON.stringify(operations));
+    formData.append("map", JSON.stringify(map));
+    formData.append("0", file);
+    return Vue.axios
+      .post(resource, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
   },
 };

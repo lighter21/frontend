@@ -17,7 +17,7 @@
           <v-avatar class="mr-3">
             <v-img
               :loading="$apolloGlobalLoading"
-              src="https://randomuser.me/api/portraits/women/81.jpg"
+              :src="user.avatar"
             ></v-img>
           </v-avatar>
           <v-text-field
