@@ -179,7 +179,7 @@ export default {
 
     uploadFile() {
       this.uploading = true;
-      return uploadImage(this.me.id, "App\\User", this.file).then(
+      return uploadImage(this.me.id, "App\\Models\\User", this.file).then(
         ({ data }) => {
           if (!data.errors) {
             this.uploading = false;

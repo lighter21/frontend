@@ -43,9 +43,8 @@ export default {
   methods: {
     submit(payload) {
       this.createPost(payload.input).then((res) => {
-        console.log(payload.file)
-        console.log(res.id)
-        if (payload.file) this.uploadFile(payload.file, res.id);
+        if (payload.file)
+          uploadImage(res.id, "App\\Models\\Post", payload.file);
       });
     },
 
@@ -77,12 +76,6 @@ export default {
         .then(({ data }) => {
           return data.createPost;
         });
-    },
-
-    uploadFile(file, id) {
-      this.uploading = true;
-      uploadImage(id, 'App\\Post', file)
-      this.uploading = false
     },
   },
 };
