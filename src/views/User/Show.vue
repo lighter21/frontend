@@ -1,16 +1,13 @@
 <template>
-  <!--      <div v-if="error">-->
-  <!--        Wystąpił nieoczekiwany błąd - spróbuj odświeżyć stronę-->
-  <!--      </div>-->
   <div>
     <v-container>
       <v-col lg="6" md="8" sm="12" align-self="center" class="mx-auto">
         <v-row>
           <v-avatar size="200" color="primary" class="fill-height my-auto">
             <img
-                :loading="$apolloGlobalLoading"
-                :src="user.avatar"
-                alt="John"
+              :loading="$apolloGlobalLoading"
+              :src="user.avatar"
+              alt="John"
             />
           </v-avatar>
 
@@ -57,14 +54,38 @@
         </v-row>
       </v-col>
     </v-container>
-    <create-post
-      v-if="isMyAccount(user)"
-      @create-post="createPost"
-    ></create-post>
-    <div v-if="$apolloGlobalLoading" class="text-center">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </div>
-    <posts-section :posts="user.posts"></posts-section>
+    <v-tabs v-model="tab" centered background-color="#282b35" dark>
+      <v-tabs-slider v-model="tab" color="primary"></v-tabs-slider>
+
+      <v-tab :to="getTabRouteObject('activity')"> Aktywność </v-tab>
+
+      <v-tab :to="getTabRouteObject('photos')"> Zdjęcia </v-tab>
+
+      <v-tab :to="getTabRouteObject('friends')"> Znajomi </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab" class="transparent">
+      <v-tab-item :value="getTabRoutePath('activity')">
+        <create-post
+          class="mt-3"
+          v-if="isMyAccount(user)"
+          @create-post="createPost"
+        ></create-post>
+        <div v-if="$apolloGlobalLoading" class="text-center">
+          <v-progress-circular
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+        </div>
+        <posts-section :posts="user.posts"></posts-section>
+      </v-tab-item>
+      <v-tab-item :value="getTabRoutePath('photos')">
+        <images-gallery class="mt-3"></images-gallery>
+      </v-tab-item>
+      <v-tab-item :value="getTabRoutePath('friends')">
+        <friends-list></friends-list>
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
@@ -77,10 +98,12 @@ import { UPDATE_OR_CREATE_FRIEND } from "@/graphql/mutations/User";
 import { StatusType } from "../../../enums/StatusType";
 import { CHECK_AUTH } from "@/store/mutations.type";
 import PostsSection from "@/components/PostsSection";
+import ImagesGallery from "@/views/User/ImagesGallery";
+import FriendsList from "@/views/User/FriendsList";
 
 export default {
   name: "Show",
-  components: {PostsSection, CreatePost },
+  components: {FriendsList, ImagesGallery, PostsSection, CreatePost },
   apollo: {
     user: {
       query: GET_USER,
@@ -103,9 +126,30 @@ export default {
   data() {
     return {
       user: {},
+      tab: "null",
     };
   },
   methods: {
+    getTabRouteObject(tabName) {
+      return {
+        name: "User.Tab",
+        params: {
+          tab: tabName,
+        },
+      };
+    },
+
+    getTabRoutePath(tabName) {
+      let routeObject = this.getTabRouteObject(tabName);
+      let location = this.$router.resolve(routeObject);
+      return location.href;
+    },
+    showUserImages() {
+      this.$router.push({
+        name: "User.Tab",
+        params: { username: this.user.username },
+      });
+    },
     createPost(input) {
       this.$apollo.mutate({
         mutation: CREATE_POST,

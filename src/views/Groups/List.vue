@@ -24,7 +24,7 @@
             <v-avatar size="75" color="primary">
               <v-img
                 :loading="$apolloGlobalLoading"
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
+               :src="default_group_photo"
                 alt="John"
               />
             </v-avatar>
@@ -54,6 +54,7 @@
 <script>
 import { GET_GROUPS } from "@/graphql/queries/Group";
 import CreateModal from "@/views/Groups/CreateModal";
+import default_group_photo from "@/assets/default_group_photo.png"
 
 export default {
   name: "List",
@@ -71,6 +72,7 @@ export default {
   components: { CreateModal },
   data() {
     return {
+      default_group_photo: default_group_photo,
       groups: [],
       groupPrivacyPolicyBindings: {
         PUBLIC: "Grupa Publiczna",

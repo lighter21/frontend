@@ -5,7 +5,7 @@
     outlined
     dark
     color="#474b5c"
-    class="mb-3 mx-3"
+    class="mb-3"
     style="width: 100%"
   >
     <v-card-title>

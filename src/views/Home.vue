@@ -1,8 +1,6 @@
 <template>
   <v-col>
-    <v-row>
-      <create-post @create-post="submit"></create-post>
-    </v-row>
+    <create-post @create-post="submit"></create-post>
     <posts-section :posts="timeline"></posts-section>
   </v-col>
 </template>
@@ -25,7 +23,7 @@ export default {
           user_id: this.user.id,
         };
       },
-      update: (data) => data.timeline,
+      update: (data) => data.Timeline,
     },
   },
   computed: {

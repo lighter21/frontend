@@ -35,6 +35,13 @@ const routes = [
     meta: { layout: "Default" },
   },
   {
+    path: "/user/:username/:tab",
+    name: "User.Tab",
+    props: true,
+    component: () => import("@/views/User/Show"),
+    meta: { layout: "Default" },
+  },
+  {
     path: "/groups/",
     name: "Groups",
     component: () => import("@/views/Groups/List"),

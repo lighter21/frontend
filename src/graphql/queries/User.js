@@ -22,6 +22,10 @@ export const GET_USER = gql`
           first_name
           second_name
           last_name
+          avatar
+        }
+        likes {
+          id
         }
         comments {
           id
@@ -97,6 +101,24 @@ export const GET_USER_SUGGESTED_FRIENDS = gql`
       last_name
       birth_date
       avatar
+    }
+  }
+`;
+
+export const GET_USERS_FRIENDS_LIST = gql`
+  query User($username: String) {
+    user(username: $username) {
+      id
+      friends {
+        id
+        email
+        username
+        first_name
+        second_name
+        last_name
+        birth_date
+        avatar
+      }
     }
   }
 `;

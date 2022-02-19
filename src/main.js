@@ -16,6 +16,9 @@ Vue.use(FlashMessage);
 import { EmojiPickerPlugin } from "vue-emoji-picker";
 Vue.use(EmojiPickerPlugin);
 
+import VueGallery from "vue-gallery";
+Vue.component("VGallery", VueGallery);
+
 Vue.config.productionTip = false;
 ApiService.init();
 document.title = "Stuck!";
