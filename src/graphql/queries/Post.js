@@ -13,6 +13,7 @@ export const GET_TIMELINE = gql`
           first_name
           second_name
           last_name
+          avatar
         }
       }
       user {
@@ -21,6 +22,7 @@ export const GET_TIMELINE = gql`
         first_name
         second_name
         last_name
+        avatar
       }
       likes {
         id

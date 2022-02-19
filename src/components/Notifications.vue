@@ -1,10 +1,10 @@
 <template>
   <div class="text-center">
     <v-menu
-        :close-on-content-click="false"
-        offset-y
-        transition="slide-y-transition"
-        bottom
+      :close-on-content-click="false"
+      offset-y
+      transition="slide-y-transition"
+      bottom
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
@@ -17,8 +17,8 @@
         <v-divider></v-divider>
 
         <div
-            class="text-center text-body-2 my-4"
-            v-if="user.received_invitations.length === 0"
+          class="text-center text-body-2 my-4"
+          v-if="user.received_invitations.length === 0"
         >
           Brak nowych powiadomień
         </div>
@@ -43,21 +43,24 @@
                 <v-spacer></v-spacer>
                 <div v-if="item.pivot.status === 'PENDING'">
                   <v-btn
-                      small
-                      color="success"
-                      class="mx-2"
-                      @click="accept(item)"
+                    small
+                    color="success"
+                    class="mx-2"
+                    @click="accept(item)"
                   >
                     Akceptuj
                   </v-btn>
-                  <v-btn small color="danger mr-6" @click="decline(item)"> Odrzuć</v-btn>
+                  <v-btn small color="danger mr-6" @click="decline(item)">
+                    Odrzuć</v-btn
+                  >
                 </div>
-
               </v-list-item-action>
-              <div class="text-center" v-if="item.pivot.status === 'ACCEPTED'">Użytkownik został dodany do listy
-                znajomych
+              <div class="text-center" v-if="item.pivot.status === 'ACCEPTED'">
+                Użytkownik został dodany do listy znajomych
               </div>
-              <div class="text-center" v-if="item.pivot.status === 'DECLINED'">Zaproszenie zostało odrzucone</div>
+              <div class="text-center" v-if="item.pivot.status === 'DECLINED'">
+                Zaproszenie zostało odrzucone
+              </div>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -67,8 +70,8 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
-import {UPDATE_OR_CREATE_FRIEND} from "@/graphql/mutations/User";
+import { mapState } from "vuex";
+import { UPDATE_OR_CREATE_FRIEND } from "@/graphql/mutations/User";
 
 export default {
   name: "Notifications",
@@ -96,7 +99,7 @@ export default {
         variables: {
           id: this.user.id,
           friend_id: friend_id,
-          status: status
+          status: status,
         },
       });
     },

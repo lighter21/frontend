@@ -1,7 +1,7 @@
 <template>
   <v-list-item style="align-items: normal" dark>
     <v-list-item-avatar>
-      <img :alt="comment.user.first_name + ' ' + comment.user.last_name" />
+      <v-img :src="comment.user.avatar" :alt="comment.user.first_name + ' ' + comment.user.last_name" />
     </v-list-item-avatar>
     <v-list-item-content>
       <div class="my-auto font-weight-bold" style="font-size: 14px">

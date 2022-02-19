@@ -9,7 +9,10 @@
   >
     <v-list-item>
       <v-list-item-avatar>
-        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+        <v-img
+          :src="post.user.avatar"
+          :alt="post.user.first_name + ' ' + post.user.last_name"
+        />
       </v-list-item-avatar>
       <v-list-item-content class="mt-2">
         <v-list-item-title class="subtitle">
@@ -138,7 +141,7 @@ export default {
           },
         })
         .then(() => {
-          this.isLiked = !this.isLiked
+          this.isLiked = !this.isLiked;
         });
     },
   },

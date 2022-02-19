@@ -32,6 +32,7 @@ export const GET_USER = gql`
             first_name
             second_name
             last_name
+            avatar
           }
         }
       }
@@ -79,6 +80,7 @@ export const GET_USER_FRIENDS = gql`
         second_name
         last_name
         birth_date
+        avatar
       }
     }
   }

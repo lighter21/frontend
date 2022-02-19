@@ -13,6 +13,8 @@ import { apolloProvider } from "@/vue-apollo";
 Vue.use(VueAxios, axios);
 import FlashMessage from "@smartweb/vue-flash-message";
 Vue.use(FlashMessage);
+import { EmojiPickerPlugin } from "vue-emoji-picker";
+Vue.use(EmojiPickerPlugin);
 
 Vue.config.productionTip = false;
 ApiService.init();

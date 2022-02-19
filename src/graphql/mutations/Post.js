@@ -14,6 +14,7 @@ export const CREATE_POST = gql`
           first_name
           second_name
           last_name
+          avatar
         }
       }
       user {
@@ -22,6 +23,7 @@ export const CREATE_POST = gql`
         first_name
         second_name
         last_name
+        avatar
       }
       likes {
         id

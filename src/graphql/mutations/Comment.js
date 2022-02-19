@@ -12,6 +12,7 @@ export const CREATE_COMMENT = gql`
         first_name
         second_name
         last_name
+        avatar
       }
     }
   }
