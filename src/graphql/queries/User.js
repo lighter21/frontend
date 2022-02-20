@@ -30,6 +30,7 @@ export const GET_USER = gql`
         comments {
           id
           body
+            created_at
           user {
             id
             email

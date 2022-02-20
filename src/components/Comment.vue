@@ -13,9 +13,8 @@
       <v-layout>
         <v-flex xs4>
           <v-layout row class="my-1">
-            <div class="caption font-weight-bold mx-3">Lubię to!</div>
             <div class="grey--text caption font-weight-bold ml-3">
-              {{ comment.created_at }}
+              {{ date }}
             </div>
           </v-layout>
         </v-flex>
@@ -25,9 +24,19 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "Comment",
   props: ["comment"],
+  data() {
+    return {
+      date: null
+    }
+  },
+  mounted() {
+    this.date = moment(this.comment.created_at).format("HH:MM DD-MM-YY");
+  }
 };
 </script>
 

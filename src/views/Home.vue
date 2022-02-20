@@ -76,5 +76,8 @@ export default {
         });
     },
   },
+  mounted() {
+    this.$apollo.queries.timeline.refetch()
+  }
 };
 </script>

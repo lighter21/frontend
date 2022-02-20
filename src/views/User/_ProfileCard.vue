@@ -4,7 +4,7 @@
     color="#474b5c"
     :loading="$apollo.loading"
     class="ma-2"
-    width="300"
+    width="250"
     height="370"
   >
     <template slot="progress">
@@ -24,7 +24,7 @@
       >{{ user.first_name + " " + user.last_name }}
     </v-card-title>
     <v-card-actions>
-      <v-col class="ma-">
+      <v-col>
         <v-btn
           color="primary"
           class="mb-2 mt-n4"
@@ -37,6 +37,7 @@
           >Zobacz profil</v-btn
         >
       </v-col>
+
     </v-card-actions>
   </v-card>
 </template>

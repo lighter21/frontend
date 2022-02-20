@@ -24,7 +24,7 @@
             <v-avatar size="75" color="primary">
               <v-img
                 :loading="$apolloGlobalLoading"
-               :src="default_group_photo"
+                :src="default_group_photo"
                 alt="John"
               />
             </v-avatar>

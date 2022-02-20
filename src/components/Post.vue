@@ -69,8 +69,8 @@
               @click="toggleLike"
             >
               <v-icon left dark :color="color"> mdi-thumb-up-outline</v-icon>
-              <span v-if="!isLiked"> Lubię to!</span>
-              <span v-if="isLiked" class="blue--text"> Lubię to!</span>
+              <span v-if="!liked"> Lubię to!</span>
+              <span v-if="liked" class="blue--text"> Lubię to!</span>
             </v-btn>
           </v-layout>
 
@@ -116,7 +116,7 @@ export default {
       me: (state) => state.auth.user,
     }),
     color: function () {
-      if (this.isLiked) return "blue";
+      if (this.liked) return "blue";
       return "white";
     },
   },
@@ -124,13 +124,10 @@ export default {
     return {
       like: like,
       showComments: false,
-      isLiked: false,
+      liked: false
     };
   },
   methods: {
-    checkIfLiked() {
-      this.isLiked = this.post.likes.some((item) => item.user_id == this.me.id);
-    },
     toggleLike() {
       this.$apollo
         .mutate({
@@ -141,13 +138,20 @@ export default {
           },
         })
         .then(() => {
-          this.isLiked = !this.isLiked;
+          this.liked = !this.liked
         });
+    },
+    isLiked() {
+      if (this.post) {
+        return this.post.likes.some((item) => item.id == this.me.id);
+      }
+      return false;
     },
   },
   mounted() {
-    this.checkIfLiked();
-  },
+    this.liked = this.isLiked()
+
+  }
 };
 </script>
 
