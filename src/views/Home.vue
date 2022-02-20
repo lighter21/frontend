@@ -41,8 +41,10 @@ export default {
   methods: {
     submit(payload) {
       this.createPost(payload.input).then((res) => {
-        if (payload.file)
+        if (payload.file) {
           uploadImage(res.id, "App\\Models\\Post", payload.file);
+          this.$apollo.queries.Timeline.refetch();
+        }
       });
     },
 
@@ -60,6 +62,7 @@ export default {
                 user_id: this.user.id,
               },
             });
+            console.log(timeline, createPost)
             store.writeQuery({
               query: GET_TIMELINE,
               data: {

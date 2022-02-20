@@ -15,7 +15,7 @@
       <v-layout>
         <v-row no-gutters>
           <v-avatar class="mr-3">
-            <v-img :loading="$apolloGlobalLoading" :src="user.avatar"></v-img>
+            <v-img :loading="$apolloGlobalLoading" :src="user.parsed_avatar_path"></v-img>
           </v-avatar>
           <v-text-field
             dense

@@ -1,8 +1,7 @@
 <template>
   <div>
-    <v-row>
       <div
-        v-if="friends.length === 0 && !$apolloGlobalLoading"
+        v-if="user.friends.length === 0 && !$apolloGlobalLoading"
         class="my-6 text-h6 mx-auto"
       >
         Ten użytkownik nie ma żadnych znajomych.
@@ -13,8 +12,9 @@
           color="primary"
         ></v-progress-circular>
       </div>
+    <v-row class="my-3" style="justify-content: space-evenly;">
       <ProfileCard
-        v-for="friend in friends"
+        v-for="friend in user.friends"
         :key="friend.id"
         :user="friend"
       ></ProfileCard>
@@ -37,12 +37,12 @@ export default {
           username: this.$route.params.username,
         };
       },
-      update: (data) => data.user.friends,
+      update: (data) => data.user,
     },
   },
   data() {
     return {
-      friends: [],
+      user: [],
     };
   },
 };

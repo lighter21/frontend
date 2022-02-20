@@ -4,8 +4,8 @@
       <v-row class="my-3 grey darken-4 rounded">
         <v-img
           contain
-          :src="image.parsed_path"
-          @click="index = 1"
+          :src="imagesLinks[0]"
+          @click="index = 0"
           class="mx-auto image"
         >
           <template v-slot:placeholder>
@@ -20,7 +20,7 @@
       </v-row>
     </v-fade-transition>
     <v-gallery
-      :images="[image.parsed_path]"
+      :images="imagesLinks"
       :index="index"
       @close="index = null"
     ></v-gallery>
@@ -36,10 +36,20 @@ export default {
       index: null,
     };
   },
+  computed: {
+    imagesLinks: function () {
+      let images = [this.image]
+      return images.map(item => item.parsed_path)
+    }
+  }
 };
 </script>
 
-<style scoped>
+<style>
+.blueimp-gallery-display {
+  display: none;
+  opacity: 1;
+}
 .image {
   cursor: pointer;
   filter: blur(1px);
@@ -50,28 +60,26 @@ export default {
   filter: blur(0px);
 }
 
-@media screen and (min-width: 600px){
+@media screen and (min-width: 600px) {
   .image {
     max-height: 450px;
   }
-
 }
 
-@media screen and (min-width: 960px){
+@media screen and (min-width: 960px) {
   .image {
     max-height: 600px;
   }
 }
 
-@media screen and (min-width: 1264px){
+@media screen and (min-width: 1264px) {
   .image {
     max-height: 800px;
   }
 }
-@media screen and (min-width: 1904px){
+@media screen and (min-width: 1904px) {
   .image {
     max-height: 800px;
   }
 }
-
 </style>

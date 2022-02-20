@@ -29,7 +29,7 @@
     </v-app-bar>
     <!--    -->
     <Sidebar v-model="showSidebar"></Sidebar>
-    <FlashMessage :position="'right bottom'"></FlashMessage>
+    <FlashMessage style="z-index: 1000" :position="'right bottom'"></FlashMessage>
     <v-main>
       <v-container>
         <router-view></router-view>

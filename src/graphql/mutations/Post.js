@@ -15,18 +15,27 @@ export const CREATE_POST = gql`
           second_name
           last_name
           avatar
+          parsed_avatar_path
         }
       }
       user {
         id
-        email
+        username
         first_name
         second_name
         last_name
         avatar
+        parsed_avatar_path
       }
       likes {
         id
+      }
+      image {
+        parsed_path
+      }
+      groups {
+        id
+        name
       }
     }
   }

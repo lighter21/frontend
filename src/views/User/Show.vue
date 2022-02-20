@@ -6,7 +6,7 @@
           <v-avatar size="200" color="primary" class="fill-height my-auto">
             <img
               :loading="$apolloGlobalLoading"
-              :src="user.avatar"
+              :src="user.parsed_avatar_path"
               alt="John"
             />
           </v-avatar>

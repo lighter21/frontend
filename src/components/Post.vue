@@ -10,7 +10,7 @@
     <v-list-item>
       <v-list-item-avatar>
         <v-img
-          :src="post.user.avatar"
+          :src="post.user.parsed_avatar_path"
           :alt="post.user.first_name + ' ' + post.user.last_name"
         />
       </v-list-item-avatar>
@@ -180,5 +180,13 @@ export default {
 }
 .link:hover {
   color: lightblue;
+}
+
+.blueimp-gallery-display {
+  display: none;
+}
+
+.blueimp-gallery {
+  display: block;
 }
 </style>

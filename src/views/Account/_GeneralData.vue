@@ -87,7 +87,7 @@
           <v-avatar size="100" color="primary" class="fill-height my-auto">
             <img
               :loading="$apolloGlobalLoading"
-              :src="userGeneralData.avatar"
+              :src="userGeneralData.parsed_avatar_path"
               alt="John"
             />
           </v-avatar>
@@ -112,6 +112,7 @@ import { GET_USER_GENERAL_DATA } from "@/graphql/queries/User";
 import { mapState } from "vuex";
 import { UPDATE_USER_GENERAL_DATA } from "@/graphql/mutations/User";
 import { uploadImage } from "@/graphql/mutations/Image";
+import {CHECK_AUTH} from "@/store/mutations.type";
 
 export default {
   name: "GeneralData",
@@ -161,6 +162,7 @@ export default {
 
     saveUserGeneralData() {
       let input = Object.assign({}, this.userGeneralData);
+      delete input.parsed_avatar_path;
       delete input.__typename;
       this.$apollo
         .mutate({
@@ -184,6 +186,7 @@ export default {
           if (!data.errors) {
             this.uploading = false;
             this.userGeneralData.avatar = data.data.UploadImage.path;
+            this.$store.dispatch(CHECK_AUTH)
           } else {
             this.uploading = false;
           }

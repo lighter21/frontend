@@ -8,7 +8,7 @@
     </div>
 
     <v-fade-transition mode="out-in">
-      <v-row>
+      <v-row style="justify-content: space-evenly">
         <div
           class="rounded-lg mx-4 my-4 image-wrapper"
           v-for="(image, i) in imagesLinks"

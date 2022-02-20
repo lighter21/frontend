@@ -16,7 +16,7 @@
         </v-row>
         <v-row justify="center">
           <v-avatar color="grey" size="86">
-            <v-img :src="user.avatar"></v-img>
+            <v-img :src="user.parsed_avatar_path"></v-img>
           </v-avatar>
         </v-row>
         <v-row justify="center" class="font-weight-bold">

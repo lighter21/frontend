@@ -12,6 +12,7 @@ export const GET_USER = gql`
       birth_date
       created_at
       avatar
+      parsed_avatar_path
       posts {
         id
         body
@@ -23,6 +24,7 @@ export const GET_USER = gql`
           second_name
           last_name
           avatar
+          parsed_avatar_path
         }
         likes {
           id
@@ -38,6 +40,7 @@ export const GET_USER = gql`
             second_name
             last_name
             avatar
+            parsed_avatar_path
           }
         }
         image {
@@ -57,6 +60,7 @@ export const GET_USER_GENERAL_DATA = gql`
       last_name
       birth_date
       avatar
+      parsed_avatar_path
     }
   }
 `;
@@ -89,6 +93,7 @@ export const GET_USER_FRIENDS = gql`
         last_name
         birth_date
         avatar
+        parsed_avatar_path
       }
     }
   }
@@ -105,6 +110,7 @@ export const GET_USER_SUGGESTED_FRIENDS = gql`
       last_name
       birth_date
       avatar
+      parsed_avatar_path
     }
   }
 `;
@@ -122,6 +128,7 @@ export const GET_USERS_FRIENDS_LIST = gql`
         last_name
         birth_date
         avatar
+        parsed_avatar_path
       }
     }
   }

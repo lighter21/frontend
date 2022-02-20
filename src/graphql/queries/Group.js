@@ -31,6 +31,7 @@ export const GET_GROUP = gql`
             second_name
             last_name
             avatar
+            parsed_avatar_path
           }
         }
         user {
@@ -40,6 +41,7 @@ export const GET_GROUP = gql`
           second_name
           last_name
           avatar
+          parsed_avatar_path
         }
         likes {
           id

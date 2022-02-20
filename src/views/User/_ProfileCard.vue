@@ -17,7 +17,7 @@
 
     <v-img
       height="200"
-      :src="user.avatar"
+      :src="user.parsed_avatar_path"
     ></v-img>
 
     <v-card-title class="text-h6"

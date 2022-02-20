@@ -18,7 +18,7 @@
         <v-list dark color="#474b5c">
           <v-list-item>
             <v-list-item-avatar>
-              <img :src="user.avatar" alt="John" />
+              <img :src="user.parsed_avatar_path" alt="John" />
             </v-list-item-avatar>
 
             <v-list-item-content>

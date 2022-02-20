@@ -26,7 +26,7 @@
         <template v-for="(item, index) in user.received_invitations">
           <v-list-item :key="index">
             <v-list-item-avatar>
-              <v-img :src="item.avatar"></v-img>
+              <v-img :src="item.parsed_avatar_path"></v-img>
             </v-list-item-avatar>
 
             <v-list-item-content>
