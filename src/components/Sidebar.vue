@@ -5,7 +5,7 @@
     dark
     color="#282b35"
     class="white--text"
-    :permanent="$vuetify.breakpoint.smAndUp"
+    :permanent="$vuetify.breakpoint.mdAndUp"
     v-model="showSidebar"
   >
     <template v-slot:prepend>
@@ -16,9 +16,7 @@
         </v-row>
         <v-row justify="center">
           <v-avatar color="grey" size="86">
-            <v-img
-              :src="user.avatar"
-            ></v-img>
+            <v-img :src="user.avatar"></v-img>
           </v-avatar>
         </v-row>
         <v-row justify="center" class="font-weight-bold">
@@ -69,11 +67,20 @@ import { LOGOUT } from "@/store/actions.type";
 
 export default {
   name: "Sidebar",
-  props: ["showSidebar"],
+  props: ["value"],
   data() {
     return {
+      showSidebar: this.value,
       logo: s,
     };
+  },
+  watch: {
+    value: function (newVal) {
+      this.showSidebar = newVal
+    },
+    showSidebar: function (newVal) {
+      this.$emit("input", newVal)
+    }
   },
   computed: {
     ...mapState({

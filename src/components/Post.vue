@@ -102,6 +102,10 @@
         </v-row>
       </v-layout>
       <v-divider></v-divider>
+      <post-image-section
+        v-if="post.image"
+        :image="post.image">
+      </post-image-section>
     </v-card-text>
     <comments-section
       v-if="showComments"
@@ -118,9 +122,10 @@ import like from "@/assets/like.svg";
 import { mapState } from "vuex";
 import { TOGGLE_LIKE } from "@/graphql/mutations/Post";
 import moment from "moment";
+import PostImageSection from "@/components/PostImageSection";
 
 export default {
-  components: { CommentsSection },
+  components: {PostImageSection, CommentsSection },
   name: "Post",
   props: ["post"],
   computed: {
