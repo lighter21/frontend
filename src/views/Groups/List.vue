@@ -5,9 +5,6 @@
       <create-modal></create-modal>
     </v-card-title>
     <v-card-text>
-      <!--          <div v-if="error">-->
-      <!--            Wystąpił nieoczekiwany błąd - spróbuj odświeżyć stronę-->
-      <!--          </div>-->
       <div v-if="groups.length === 0" class="text-center ma-4 text-h6">
         Nie dodano jeszcze żadnej grupy. Stwórz pierwszą!
       </div>

@@ -16,12 +16,23 @@
       </v-list-item-avatar>
       <v-list-item-content class="mt-2">
         <v-list-item-title class="subtitle">
-          {{ post.user.first_name + " " + post.user.last_name }}
+          <router-link :to="`/user/${post.user.username}`" class="link">
+            {{ post.user.first_name + " " + post.user.last_name }}
+          </router-link>
+
+          <span v-if="post.groups">
+            <span v-for="group in post.groups" :key="group.id">
+              <span class="caption"> &#10148; </span>
+              <router-link :to="`/group/${group.id}`" class="link">
+                {{ group.name }}
+              </router-link>
+            </span>
+          </span>
         </v-list-item-title>
         <v-list-item-subtitle class="caption">
           <!--            {{ post.audience }}-->
           Publiczny
-          {{ " · " + post.created_at }}
+          {{ " · " + date }}
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
@@ -106,6 +117,7 @@ import CommentsSection from "@/components/CommentsSection";
 import like from "@/assets/like.svg";
 import { mapState } from "vuex";
 import { TOGGLE_LIKE } from "@/graphql/mutations/Post";
+import moment from "moment";
 
 export default {
   components: { CommentsSection },
@@ -124,7 +136,8 @@ export default {
     return {
       like: like,
       showComments: false,
-      liked: false
+      liked: false,
+      date: null,
     };
   },
   methods: {
@@ -138,7 +151,7 @@ export default {
           },
         })
         .then(() => {
-          this.liked = !this.liked
+          this.liked = !this.liked;
         });
     },
     isLiked() {
@@ -149,10 +162,18 @@ export default {
     },
   },
   mounted() {
-    this.liked = this.isLiked()
-
-  }
+    this.liked = this.isLiked();
+    this.date = moment(this.post.created_at).format("HH:MM DD-MM-YY");
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.link {
+  color: white;
+  text-decoration: none;
+}
+.link:hover {
+  color: lightblue;
+}
+</style>

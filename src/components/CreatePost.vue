@@ -21,7 +21,7 @@
             dense
             :loading="$apolloGlobalLoading"
             outlined
-            placeholder="O czym myślisz, Bartosz?"
+            :placeholder="`O czym myślisz, ${user.first_name}?`"
             v-model="body"
           >
           </v-text-field>

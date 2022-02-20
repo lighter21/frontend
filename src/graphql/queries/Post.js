@@ -18,7 +18,7 @@ export const GET_TIMELINE = gql`
       }
       user {
         id
-        email
+        username
         first_name
         second_name
         last_name
@@ -26,6 +26,13 @@ export const GET_TIMELINE = gql`
       }
       likes {
         id
+      }
+      image {
+        parsed_path
+      }
+      groups {
+        id
+        name
       }
     }
   }

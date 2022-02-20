@@ -26,10 +26,11 @@ export const GET_GROUP = gql`
           body
           user {
             id
-            email
+            username
             first_name
             second_name
             last_name
+            avatar
           }
         }
         user {
@@ -38,7 +39,17 @@ export const GET_GROUP = gql`
           first_name
           second_name
           last_name
+          avatar
         }
+        likes {
+          id
+        }
+        image {
+          parsed_path
+        }
+      }
+      members {
+        id
       }
     }
   }

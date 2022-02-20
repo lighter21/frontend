@@ -18,7 +18,7 @@ export const GET_USER = gql`
         created_at
         user {
           id
-          email
+          username
           first_name
           second_name
           last_name
@@ -39,6 +39,9 @@ export const GET_USER = gql`
             last_name
             avatar
           }
+        }
+        image {
+          parsed_path
         }
       }
     }
