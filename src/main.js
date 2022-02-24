@@ -10,17 +10,25 @@ import { CHECK_AUTH } from "@/store/mutations.type";
 import Auth from "@/layouts/Auth";
 import Default from "@/layouts/Default";
 import { apolloProvider } from "@/vue-apollo";
-Vue.use(VueAxios, axios);
 import FlashMessage from "@smartweb/vue-flash-message";
-Vue.use(FlashMessage);
 import { EmojiPickerPlugin } from "vue-emoji-picker";
+import VueGallery from "vue-gallery";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+import { VeeValidateService } from "@/vee-validate";
+
+Vue.use(VueAxios, axios);
+Vue.use(FlashMessage);
 Vue.use(EmojiPickerPlugin);
 
-import VueGallery from "vue-gallery";
 Vue.component("VGallery", VueGallery);
+
+Vue.component("ValidationObserver", ValidationObserver);
+
+Vue.component("ValidationProvider", ValidationProvider);
 
 Vue.config.productionTip = false;
 ApiService.init();
+VeeValidateService.init();
 document.title = "Stuck!";
 Vue.component("Auth", Auth);
 Vue.component("Default", Default);
