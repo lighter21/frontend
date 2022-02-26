@@ -46,7 +46,7 @@ const actions = {
       })
       .catch(({ response }) => {
         console.log(response);
-        context.commit(SET_ERRORS, response.data.errors);
+        context.commit(SET_ERRORS, response.data.exception);
         context.commit(SET_LOADING, false);
       });
   },

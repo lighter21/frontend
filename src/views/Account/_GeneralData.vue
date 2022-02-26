@@ -5,104 +5,138 @@
       W dowolnej chwili możesz wyświetlić i zmienić informacje o sobie.
     </v-card-subtitle>
     <v-card-text>
-      <form @submit.prevent="submit">
-        <v-text-field
-          v-model="userGeneralData.first_name"
-          :counter="50"
-          outlined
-          :loading="$apolloGlobalLoading"
-          label="Pierwsze imie"
-          dark
-        ></v-text-field>
-        <v-text-field
-          v-model="userGeneralData.second_name"
-          :counter="50"
-          outlined
-          :loading="$apolloGlobalLoading"
-          label="Drugie imię"
-          dark
-        ></v-text-field>
-        <v-text-field
-          v-model="userGeneralData.last_name"
-          :counter="50"
-          outlined
-          :loading="$apolloGlobalLoading"
-          label="Nazwisko"
-          dark
-        ></v-text-field>
-        <v-text-field
-          v-model="userGeneralData.email"
-          :counter="50"
-          outlined
-          :loading="$apolloGlobalLoading"
-          label="Email"
-          dark
-          type="email"
-        ></v-text-field>
-        <v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          min-width="auto"
-          :return-value.sync="userGeneralData.birth_date"
-        >
-          <template v-slot:activator="{ on, attrs }">
+      <validation-observer ref="observer" v-slot="{ invalid }">
+        <form @submit.prevent="submit">
+          <ValidationProvider
+            name="name"
+            rules="required|min:2|max:255|alpha_spaces"
+            v-slot="{ errors }"
+          >
             <v-text-field
-              :label="'Data urodzenia: ' + userGeneralData.birth_date"
-              prepend-inner-icon="mdi-calendar"
-              readonly
-              :loading="$apolloGlobalLoading"
+              v-model="userGeneralData.first_name"
+              :counter="50"
               outlined
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker no-title scrollable>
-            <v-btn
-              text
-              color="primary"
               :loading="$apolloGlobalLoading"
-              @click="menu = false"
-            >
-              Zamknij
-            </v-btn>
-            <v-btn
-              text
-              color="primary"
-              :loading="$apolloGlobalLoading"
-              @click="$refs.menu.save(userGeneralData.birth_date)"
-            >
-              OK
-            </v-btn>
-          </v-date-picker>
-        </v-menu>
-
-        <v-divider></v-divider>
-
-        <v-card-subtitle> Zdjęcie profilowe</v-card-subtitle>
-
-        <v-row class="my-4">
-          <v-avatar size="100" color="primary" class="fill-height my-auto">
-            <img
-              :loading="$apolloGlobalLoading"
-              :src="userGeneralData.parsed_avatar_path"
-              alt="John"
+              :error-messages="errors"
+              label="Pierwsze imie"
+              dark
             />
-          </v-avatar>
-          <v-file-input
-            class="ml-6 my-auto"
-            v-model="file"
-            accept="image/png, image/jpeg, image/bmp"
-            placeholder="Wybierz swój avatar"
-            prepend-icon="mdi-camera"
-            label="Avatar"
-          ></v-file-input>
-        </v-row>
+          </ValidationProvider>
 
-        <v-btn class="mr-4" type="submit" color="primary"> Zapisz</v-btn>
-      </form>
+          <ValidationProvider
+            rules="max:255|alpha_spaces"
+            name="last_name"
+            v-slot="{ errors }"
+          >
+            <v-text-field
+              v-model="userGeneralData.second_name"
+              :counter="50"
+              outlined
+              :error-messages="errors"
+              :loading="$apolloGlobalLoading"
+              label="Drugie imię"
+              dark
+            />
+          </ValidationProvider>
+
+          <ValidationProvider
+            name="last_name"
+            rules="required|min:2|max:255|alpha_spaces"
+            v-slot="{ errors }"
+          >
+            <v-text-field
+              v-model="userGeneralData.last_name"
+              :counter="50"
+              outlined
+              :error-messages="errors"
+              :loading="$apolloGlobalLoading"
+              label="Nazwisko"
+              dark
+            />
+          </ValidationProvider>
+
+          <ValidationProvider
+            name="email"
+            rules="required|email"
+            v-slot="{ errors }"
+          >
+            <v-text-field
+              v-model="userGeneralData.email"
+              :counter="50"
+              outlined
+              :loading="$apolloGlobalLoading"
+              label="Email"
+              dark
+              :error-messages="errors"
+              type="email"
+            />
+          </ValidationProvider>
+
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+            :return-value.sync="userGeneralData.birth_date"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                :label="'Data urodzenia: ' + userGeneralData.birth_date"
+                prepend-inner-icon="mdi-calendar"
+                readonly
+                :loading="$apolloGlobalLoading"
+                outlined
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker no-title scrollable>
+              <v-btn
+                text
+                color="primary"
+                :loading="$apolloGlobalLoading"
+                @click="menu = false"
+              >
+                Zamknij
+              </v-btn>
+              <v-btn
+                text
+                color="primary"
+                :loading="$apolloGlobalLoading"
+                @click="$refs.menu.save(userGeneralData.birth_date)"
+              >
+                OK
+              </v-btn>
+            </v-date-picker>
+          </v-menu>
+
+          <v-divider></v-divider>
+
+          <v-card-subtitle> Zdjęcie profilowe</v-card-subtitle>
+
+          <v-row class="my-4">
+            <v-avatar size="100" color="primary" class="fill-height my-auto">
+              <img
+                :loading="$apolloGlobalLoading"
+                :src="userGeneralData.parsed_avatar_path"
+                alt="John"
+              />
+            </v-avatar>
+            <v-file-input
+              class="ml-6 my-auto"
+              v-model="file"
+              accept="image/png, image/jpeg, image/bmp"
+              placeholder="Wybierz swój avatar"
+              prepend-icon="mdi-camera"
+              label="Avatar"
+            ></v-file-input>
+          </v-row>
+
+          <v-btn class="mr-4" type="submit" :disabled="invalid" color="primary"> Zapisz</v-btn>
+        </form>
+      </validation-observer>
     </v-card-text>
   </v-card>
 </template>
@@ -112,7 +146,7 @@ import { GET_USER_GENERAL_DATA } from "@/graphql/queries/User";
 import { mapState } from "vuex";
 import { UPDATE_USER_GENERAL_DATA } from "@/graphql/mutations/User";
 import { uploadImage } from "@/graphql/mutations/Image";
-import {CHECK_AUTH} from "@/store/mutations.type";
+import { CHECK_AUTH } from "@/store/mutations.type";
 
 export default {
   name: "GeneralData",
@@ -157,7 +191,7 @@ export default {
         this.saveUserGeneralData();
       }
 
-      this.$router.push({name: "Home"})
+      this.$router.push({ name: "Home" });
     },
 
     saveUserGeneralData() {
@@ -186,7 +220,7 @@ export default {
           if (!data.errors) {
             this.uploading = false;
             this.userGeneralData.avatar = data.data.UploadImage.path;
-            this.$store.dispatch(CHECK_AUTH)
+            this.$store.dispatch(CHECK_AUTH);
           } else {
             this.uploading = false;
           }
