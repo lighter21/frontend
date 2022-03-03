@@ -15,6 +15,8 @@ import { EmojiPickerPlugin } from "vue-emoji-picker";
 import VueGallery from "vue-gallery";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import { VeeValidateService } from "@/vee-validate";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "@/firebase";
 
 Vue.use(VueAxios, axios);
 Vue.use(FlashMessage);
@@ -29,6 +31,7 @@ Vue.component("ValidationProvider", ValidationProvider);
 Vue.config.productionTip = false;
 ApiService.init();
 VeeValidateService.init();
+initializeApp(firebaseConfig);
 document.title = "Stuck!";
 Vue.component("Auth", Auth);
 Vue.component("Default", Default);

@@ -35,6 +35,7 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+    <ChatWrapper></ChatWrapper>
   </v-app>
 </template>
 
@@ -44,10 +45,11 @@ import router from "@/router";
 import Sidebar from "@/components/Sidebar";
 import UserMenu from "@/components/UserMenu";
 import Notifications from "@/components/Notifications";
+import ChatWrapper from "@/views/Chat/ChatWrapper";
 
 export default {
   name: "Default",
-  components: { UserMenu, Notifications, Sidebar },
+  components: {ChatWrapper, UserMenu, Notifications, Sidebar },
   data() {
     return {
       showSidebar: this.$vuetify.breakpoint.mdAndUp,

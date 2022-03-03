@@ -62,7 +62,7 @@ export default {
                 user_id: this.user.id,
               },
             });
-            console.log(timeline, createPost)
+            console.log(timeline, createPost);
             store.writeQuery({
               query: GET_TIMELINE,
               data: {
@@ -80,7 +80,7 @@ export default {
     },
   },
   mounted() {
-    this.$apollo.queries.timeline.refetch()
-  }
+    this.$apollo.queries.timeline.refetch();
+  },
 };
 </script>

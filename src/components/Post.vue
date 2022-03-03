@@ -36,7 +36,7 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
-        <v-icon>more_horiz</v-icon>
+        <v-icon>mdi-dots-horizontal</v-icon>
       </v-list-item-action>
     </v-list-item>
     <v-divider></v-divider>

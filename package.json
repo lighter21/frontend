@@ -11,6 +11,7 @@
     "@smartweb/vue-flash-message": "^0.6.10",
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
+    "firebase": "^9.6.7",
     "moment": "^2.29.1",
     "vee-validate": "^3.4.14",
     "vue": "^2.6.11",
