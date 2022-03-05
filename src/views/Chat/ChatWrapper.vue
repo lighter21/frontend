@@ -1,9 +1,10 @@
 <template>
-  <div class="text-center chats">
+  <div class="chats">
     <v-menu
       :close-on-content-click="false"
       offset-y
       transition="expand-y-transition"
+      :value="open"
       class="mr-6"
       top
     >
@@ -15,22 +16,25 @@
           dark
           large
           color="primary"
+          @click="open = true"
         >
-          <v-icon dark> mdi-message </v-icon>
+          <v-icon dark> mdi-message</v-icon>
         </v-btn>
       </template>
-      <v-card dark width="300" height="350" >
-        <v-card-title>
-          Czaty
-        </v-card-title>
 
-        <v-card-text>
-          <chat-users-list />
-        </v-card-text>
-      </v-card>
-
-
-
+      <div class="chat">
+        <chatbox
+          v-if="chatting"
+          :user="user"
+          @close="open = false"
+          @back="chatting = false"
+        />
+        <chat-users-list
+          v-if="!chatting"
+          @open-chat="openNewChat"
+          :user="user"
+        />
+      </div>
     </v-menu>
   </div>
 </template>
@@ -38,24 +42,40 @@
 <script>
 import { mapState } from "vuex";
 import ChatUsersList from "@/views/Chat/ChatUsersList";
+import Chatbox from "@/views/Chat/Chatbox";
 
 export default {
   name: "ChatWrapper",
-  components: {ChatUsersList},
+  components: { Chatbox, ChatUsersList },
   computed: {
     ...mapState({
       chats: (state) => state.chat.chats,
     }),
   },
+  data() {
+    return {
+      open: false,
+      chatting: false,
+      user: null,
+    };
+  },
   methods: {
-    openNewChat() {
-      console.log('asd')
-    }
-  }
+    openNewChat(user) {
+      this.user = user;
+      this.chatting = true;
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+@import "../../assets/css/chat.scss";
+
+.chat {
+  width: 300px;
+  height: 500px;
+}
+
 .chats {
   position: fixed;
   bottom: 0;
