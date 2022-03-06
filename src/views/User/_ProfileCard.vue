@@ -15,10 +15,7 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
-      height="200"
-      :src="user.parsed_avatar_path"
-    ></v-img>
+    <v-img height="200" :src="user.parsed_avatar_path"></v-img>
 
     <v-card-title class="text-h6"
       >{{ user.first_name + " " + user.last_name }}
@@ -29,6 +26,7 @@
           color="primary"
           class="mb-2 mt-n4"
           block
+          v-if="!showingFriends"
           @click="sendFriendsInvitation"
         >
           Dodaj do znajomych
@@ -37,7 +35,6 @@
           >Zobacz profil</v-btn
         >
       </v-col>
-
     </v-card-actions>
   </v-card>
 </template>
@@ -53,11 +50,24 @@ export default {
     user: {
       required: true,
     },
+    showingFriends: {
+      type: Boolean,
+      default: () => false
+    }
   },
   computed: {
     ...mapState({
       me: (state) => state.auth.user,
     }),
+    isAlreadyInvited: function () {
+      return this.me.send_invitations.some((item) => item.id == this.user.id);
+    },
+    isAlreadyFriend: function () {
+      return this.me.friends.some((item) => item.id == this.user.id);
+    },
+    isMyAccount: function () {
+      return this.user.id == this.me.id;
+    },
   },
   methods: {
     sendFriendsInvitation() {

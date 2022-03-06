@@ -47,7 +47,7 @@ const apolloClient = new ApolloClient({
   assumeImmutableResults: true,
   link: authLink.concat(httpLink),
   cache,
-  defaultOptions: { notifyOnNetworkStatusChange: true },
+  defaultOptions: { notifyOnNetworkStatusChange: true, fetchPolicy: 'network-only' },
 });
 
 // Create the provider for Vue

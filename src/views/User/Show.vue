@@ -1,58 +1,59 @@
 <template>
   <div>
-    <v-container>
-      <v-col lg="6" md="8" sm="12" align-self="center" class="mx-auto">
-        <v-row>
-          <v-avatar size="200" color="primary" class="fill-height my-auto">
-            <img
-              :loading="$apolloGlobalLoading"
-              :src="user.parsed_avatar_path"
-              alt="John"
-            />
-          </v-avatar>
+    <v-container fluid>
+      <profile-heading-section :user="user"></profile-heading-section>
+<!--      <v-col lg="6" md="8" sm="12" align-self="center" class="mx-auto">-->
+<!--        <v-row>-->
+<!--          <v-avatar size="200" color="primary" class="fill-height my-auto">-->
+<!--            <img-->
+<!--              :loading="$apolloGlobalLoading"-->
+<!--              :src="user.parsed_avatar_path"-->
+<!--              alt="John"-->
+<!--            />-->
+<!--          </v-avatar>-->
 
-          <v-col class="mx-6" align-self="center">
-            <v-row justify="space-between">
-              <p class="title">
-                {{ getUserFullName() }}
-              </p>
-              <v-btn
-                color="primary"
-                :loading="$apolloGlobalLoading"
-                small
-                v-if="!isMyAccount() && !isAlreadyInvited"
-                @click="addToFriendsList"
-              >
-                Dodaj Znajomego
-              </v-btn>
+<!--          <v-col class="mx-6" align-self="center">-->
+<!--            <v-row justify="space-between">-->
+<!--              <p class="title">-->
+<!--                {{ getUserFullName() }}-->
+<!--              </p>-->
+<!--              <v-btn-->
+<!--                color="primary"-->
+<!--                :loading="$apolloGlobalLoading"-->
+<!--                small-->
+<!--                v-if="!isMyAccount() && !isAlreadyInvited"-->
+<!--                @click="addToFriendsList"-->
+<!--              >-->
+<!--                Dodaj Znajomego-->
+<!--              </v-btn>-->
 
-              <v-btn
-                color="primary"
-                :loading="$apolloGlobalLoading"
-                small
-                v-if="!isMyAccount() && isAlreadyInvited"
-                @click="cancelInvitation"
-              >
-                Anuluj zaproszenie
-              </v-btn>
-            </v-row>
+<!--              <v-btn-->
+<!--                color="primary"-->
+<!--                :loading="$apolloGlobalLoading"-->
+<!--                small-->
+<!--                v-if="!isMyAccount() && isAlreadyInvited"-->
+<!--                @click="cancelInvitation"-->
+<!--              >-->
+<!--                Anuluj zaproszenie-->
+<!--              </v-btn>-->
+<!--            </v-row>-->
 
-            <v-row class="my-3">
-              <div class="subtitle-1" v-if="!$apolloGlobalLoading">
-                {{ user.posts.length }} postów
-              </div>
-              <div class="mx-4 subtitle-1">88 Znajomych</div>
-              <div class="subtitle-1">7 Zdjęć</div>
-            </v-row>
-            <v-row class="subtitle-2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Blanditiis et inventore maiores praesentium quidem recusandae
-              reiciendis, repellendus. Consectetur eligendi error esse facilis
-              nobis nulla, officiis quibusdam quo sed suscipit vitae!
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-col>
+<!--            <v-row class="my-3">-->
+<!--              <div class="subtitle-1" v-if="!$apolloGlobalLoading">-->
+<!--                {{ user.posts.length }} postów-->
+<!--              </div>-->
+<!--              <div class="mx-4 subtitle-1">88 Znajomych</div>-->
+<!--              <div class="subtitle-1">7 Zdjęć</div>-->
+<!--            </v-row>-->
+<!--            <v-row class="subtitle-2">-->
+<!--              Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
+<!--              Blanditiis et inventore maiores praesentium quidem recusandae-->
+<!--              reiciendis, repellendus. Consectetur eligendi error esse facilis-->
+<!--              nobis nulla, officiis quibusdam quo sed suscipit vitae!-->
+<!--            </v-row>-->
+<!--          </v-col>-->
+<!--        </v-row>-->
+<!--      </v-col>-->
     </v-container>
     <v-tabs v-model="tab" centered background-color="#282b35" dark>
       <v-tabs-slider v-model="tab" color="primary"></v-tabs-slider>
@@ -100,10 +101,11 @@ import { CHECK_AUTH } from "@/store/mutations.type";
 import PostsSection from "@/components/PostsSection";
 import ImagesGallery from "@/views/User/ImagesGallery";
 import FriendsList from "@/views/User/FriendsList";
+import ProfileHeadingSection from "@/views/User/_ProfileHeadingSection";
 
 export default {
   name: "Show",
-  components: {FriendsList, ImagesGallery, PostsSection, CreatePost },
+  components: {ProfileHeadingSection, FriendsList, ImagesGallery, PostsSection, CreatePost },
   apollo: {
     user: {
       query: GET_USER,
@@ -130,6 +132,9 @@ export default {
     };
   },
   methods: {
+    isMyAccount() {
+      return this.user.id == this.me.id;
+    },
     getTabRouteObject(tabName) {
       return {
         name: "User.Tab",
@@ -177,42 +182,13 @@ export default {
         },
       });
     },
-    addToFriendsList() {
-      this.$apollo
-        .mutate({
-          mutation: UPDATE_OR_CREATE_FRIEND,
-          variables: {
-            id: this.me.id,
-            friend_id: this.user.id,
-            status: StatusType.Pending.status,
-          },
-        })
-        .then(() => {
-          this.$store.dispatch(CHECK_AUTH);
-        });
-    },
-    cancelInvitation() {
-      this.$apollo
-        .mutate({
-          mutation: UPDATE_OR_CREATE_FRIEND,
-          variables: {
-            id: this.me.id,
-            friend_id: this.user.id,
-            status: StatusType.Canceled.status,
-          },
-        })
-        .then(() => {
-          this.$store.dispatch(CHECK_AUTH);
-        });
-    },
+
     getUserFullName() {
       return `${this.user.first_name} ${
         this.user.second_name ? this.user.second_name : ""
       } ${this.user.last_name}`;
     },
-    isMyAccount() {
-      return this.user.id == this.me.id;
-    },
+
   },
 };
 </script>

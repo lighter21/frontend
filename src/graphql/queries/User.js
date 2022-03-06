@@ -13,6 +13,7 @@ export const GET_USER = gql`
       created_at
       avatar
       parsed_avatar_path
+      friends_count
       posts {
         id
         body

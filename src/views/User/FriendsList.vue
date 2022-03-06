@@ -2,18 +2,19 @@
   <div>
     <div
       v-if="user.friends.length === 0 && !$apolloGlobalLoading"
-      class="my-6 text-h6 mx-auto"
+      class="my-6 text-h6 text-center"
     >
       Ten użytkownik nie ma żadnych znajomych.
     </div>
     <div v-if="$apolloGlobalLoading" class="text-center">
       <v-progress-circular indeterminate color="primary"></v-progress-circular>
     </div>
-    <v-row class="my-3" style="justify-content: space-evenly">
+    <v-row class="my-3" style="">
       <ProfileCard
         v-for="friend in user.friends"
         :key="friend.id"
         :user="friend"
+        :showing-friends="true"
       ></ProfileCard>
     </v-row>
   </div>
