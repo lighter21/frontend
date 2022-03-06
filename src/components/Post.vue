@@ -36,7 +36,31 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
-        <v-icon>mdi-dots-horizontal</v-icon>
+        <div class="text-center">
+          <v-menu>
+            <template v-slot:activator="{ on: menu, attrs }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on: tooltip }">
+                  <v-btn
+                    dark
+                    v-if="isMine"
+                    icon
+                    v-bind="attrs"
+                    v-on="{ ...tooltip, ...menu }"
+                  >
+                    <v-icon>mdi-dots-horizontal</v-icon>
+                  </v-btn>
+                </template>
+                <span>Opcje</span>
+              </v-tooltip>
+            </template>
+            <v-list>
+              <v-list-item @click="deletePost">
+                <v-list-item-title>Usuń post</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
       </v-list-item-action>
     </v-list-item>
     <v-divider></v-divider>
@@ -102,9 +126,7 @@
         </v-row>
       </v-layout>
       <v-divider></v-divider>
-      <post-image-section
-        v-if="post.image"
-        :image="post.image">
+      <post-image-section v-if="post.image" :image="post.image">
       </post-image-section>
     </v-card-text>
     <comments-section
@@ -120,12 +142,12 @@
 import CommentsSection from "@/components/CommentsSection";
 import like from "@/assets/like.svg";
 import { mapState } from "vuex";
-import { TOGGLE_LIKE } from "@/graphql/mutations/Post";
+import { DELETE_POST, TOGGLE_LIKE } from "@/graphql/mutations/Post";
 import moment from "moment";
 import PostImageSection from "@/components/PostImageSection";
 
 export default {
-  components: {PostImageSection, CommentsSection },
+  components: { PostImageSection, CommentsSection },
   name: "Post",
   props: ["post"],
   computed: {
@@ -135,6 +157,10 @@ export default {
     color: function () {
       if (this.liked) return "blue";
       return "white";
+    },
+    isMine: function () {
+      if (this.post) return this.post.user.id == this.me.id;
+      return false;
     },
   },
   data() {
@@ -146,6 +172,21 @@ export default {
     };
   },
   methods: {
+    deletePost() {
+      this.$apollo
+        .mutate({
+          mutation: DELETE_POST,
+          variables: {
+            id: this.post.id,
+          },
+        })
+        .then(() => {
+          this.flashMessage.success({
+            message: "Post usunięty pomyślnie!",
+          });
+          window.location.reload()
+        });
+    },
     toggleLike() {
       this.$apollo
         .mutate({
