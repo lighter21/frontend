@@ -56,16 +56,17 @@ export default {
             input: post,
           },
           update: (store, { data: { createPost } }) => {
-            const { timeline } = store.readQuery({
+            const { Timeline } = store.readQuery({
               query: GET_TIMELINE,
               variables: {
                 user_id: this.user.id,
               },
             });
+            console.log(Timeline);
             store.writeQuery({
               query: GET_TIMELINE,
               data: {
-                timeline: [createPost, ...timeline],
+                timeline: Timeline.unshift(createPost),
               },
               variables: {
                 user_id: this.user.id,

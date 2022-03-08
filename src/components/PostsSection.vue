@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="text-center ma-4 text-h6" v-if="posts.length === 0 && !$apolloGlobalLoading">
+    <div
+      class="text-center ma-4 text-h6"
+      v-if="posts.length === 0 && !$apolloGlobalLoading"
+    >
       Nie dodano jeszcze żadnych postów.
     </div>
     <v-progress-circular
@@ -24,15 +27,17 @@ import Post from "@/components/Post";
 export default {
   name: "PostsSection",
   components: { Post },
-  props: ["posts"],
+  props: {
+    posts: {
+      required: true,
+      default: () => [],
+    },
+  },
   data() {
     return {
       like: like,
       showComments: false,
     };
-  },
-  methods: {
-    toggleLike() {},
   },
 };
 </script>
