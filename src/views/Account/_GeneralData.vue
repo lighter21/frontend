@@ -126,7 +126,7 @@
             </v-avatar>
             <v-file-input
               class="ml-6 my-auto"
-              v-model="file"
+              v-model="avatar"
               accept="image/png, image/jpeg, image/bmp"
               placeholder="Wybierz swój avatar"
               prepend-icon="mdi-camera"
@@ -134,7 +134,30 @@
             ></v-file-input>
           </v-row>
 
-          <v-btn class="mr-4" type="submit" :disabled="invalid" color="primary"> Zapisz</v-btn>
+          <v-card-subtitle> Zdjęcie w tle</v-card-subtitle>
+
+          <v-row class="my-4">
+            <v-img
+              max-height="100px"
+              max-width="100px"
+              contain
+              :loading="$apolloGlobalLoading"
+              :src="userGeneralData.parsed_background_path"
+              alt="John"
+            />
+            <v-file-input
+              class="ml-6 my-auto"
+              v-model="background"
+              accept="image/png, image/jpeg, image/bmp"
+              placeholder="Wybierz swoje zdjęcie w tle"
+              prepend-icon="mdi-camera"
+              label="Avatar"
+            ></v-file-input>
+          </v-row>
+
+          <v-btn class="mr-4" type="submit" :disabled="invalid" color="primary">
+            Zapisz
+          </v-btn>
         </form>
       </validation-observer>
     </v-card-text>
@@ -175,28 +198,36 @@ export default {
         last_name: "",
         birth_date: "",
         avatar: "",
+        background: "",
       },
       menu: false,
-      file: undefined,
+      avatar: undefined,
+      background: undefined,
       uploading: false,
     };
   },
   methods: {
-    submit() {
-      if (this.file) {
-        this.uploadFile().then(() => {
-          this.saveUserGeneralData();
-        });
-      } else {
-        this.saveUserGeneralData();
+    async submit() {
+      if (this.avatar) {
+        let path = await this.uploadImage(this.avatar);
+        this.userGeneralData.avatar = path;
       }
 
+      if (this.background) {
+        let path = await this.uploadImage(this.background);
+        this.userGeneralData.background = path;
+      }
+
+      this.saveUserGeneralData();
+
       this.$router.push({ name: "Home" });
+      this.$forceUpdate();
     },
 
     saveUserGeneralData() {
       let input = Object.assign({}, this.userGeneralData);
       delete input.parsed_avatar_path;
+      delete input.parsed_background_path;
       delete input.__typename;
       this.$apollo
         .mutate({
@@ -213,14 +244,15 @@ export default {
         });
     },
 
-    uploadFile() {
+    uploadImage(file) {
       this.uploading = true;
-      return uploadImage(this.me.id, "App\\Models\\User", this.file).then(
+      console.log(file);
+      return uploadImage(this.me.id, "App\\Models\\User", file).then(
         ({ data }) => {
           if (!data.errors) {
             this.uploading = false;
-            this.userGeneralData.avatar = data.data.UploadImage.path;
             this.$store.dispatch(CHECK_AUTH);
+            return data.data.UploadImage.path;
           } else {
             this.uploading = false;
           }
@@ -228,6 +260,9 @@ export default {
       );
     },
   },
+  mounted() {
+    this.$apollo.queries.userGeneralData.refetch()
+  }
 };
 </script>
 

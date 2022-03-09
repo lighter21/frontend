@@ -1,20 +1,24 @@
 <template>
   <v-layout column justify-center class="mb-6">
     <v-img
+      v-if="user.parsed_background_path"
       class="rounded-lg"
-      src="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+      :src="user.parsed_background_path"
       max-height="300px"
-    >
-    </v-img>
-    <v-row>
-      <v-avatar size="200" class="profile-img">
-        <img
-          :loading="$apolloGlobalLoading"
-          :src="user.parsed_avatar_path"
-          alt="John"
-        />
-      </v-avatar>
-      <v-row class="justify-space-between my-6 mx-4">
+    />
+    <div v-else class="background-gradient rounded-lg" />
+    <div class="">
+      <v-row justify="center">
+        <v-avatar size="200" class="profile-img">
+          <v-img
+            :loading="$apolloGlobalLoading"
+            :src="user.parsed_avatar_path"
+            alt="John"
+          />
+        </v-avatar>
+      </v-row>
+
+      <div class="">
         <div class="flex-column">
           <span
             class="title d-block text-center"
@@ -37,6 +41,7 @@
             </span>
           </v-row>
         </div>
+
         <div class="actions" v-if="!isMyAccount && !isAlreadyFriend">
           <v-btn
             color="primary"
@@ -58,8 +63,8 @@
             Anuluj zaproszenie
           </v-btn>
         </div>
-      </v-row>
-    </v-row>
+      </div>
+    </div>
   </v-layout>
 </template>
 
@@ -119,7 +124,6 @@ export default {
           this.$store.dispatch(CHECK_AUTH);
         });
     },
-
   },
   mounted() {
     this.date = moment(this.user.created_at).format("DD.MM.YYYY");
@@ -129,14 +133,26 @@ export default {
 
 <style lang="scss" scoped>
 .profile-img {
-  margin-top: -70px;
-  margin-left: 30%;
+  margin-top: -100px;
   border: #cbd5e0 4px solid;
+  margin-bottom: 1.5rem;
 }
 
 .actions {
   justify-self: end;
   justify-content: end;
   justify-items: end;
+}
+
+.background-gradient {
+  height: 350px;
+  width: 100%;
+  background: rgb(10, 10, 17);
+  background: linear-gradient(
+    90deg,
+    rgba(10, 10, 17, 1) 15%,
+    rgba(42, 43, 45, 1) 47%,
+    rgba(10, 10, 17, 1) 85%
+  );
 }
 </style>

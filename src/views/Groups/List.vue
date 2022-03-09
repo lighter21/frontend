@@ -78,6 +78,9 @@ export default {
     };
   },
   methods: {},
+  mounted() {
+    this.$apollo.queries.groups.refetch()
+  }
 };
 </script>
 

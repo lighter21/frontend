@@ -28,6 +28,7 @@
           block
           v-if="!showingFriends"
           @click="sendFriendsInvitation"
+          :disabled="isAlreadyInvited"
         >
           Dodaj do znajomych
         </v-btn>

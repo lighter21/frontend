@@ -13,6 +13,8 @@ export const GET_USER = gql`
       created_at
       avatar
       parsed_avatar_path
+      background
+      parsed_background_path
       friends_count
       posts {
         id
@@ -62,6 +64,8 @@ export const GET_USER_GENERAL_DATA = gql`
       birth_date
       avatar
       parsed_avatar_path
+      background
+      parsed_background_path
     }
   }
 `;
