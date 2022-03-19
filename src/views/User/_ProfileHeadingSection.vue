@@ -1,12 +1,45 @@
 <template>
   <v-layout column justify-center class="mb-6">
     <v-img
-      v-if="user.parsed_background_path"
+      v-if="user.background"
       class="rounded-lg"
       :src="user.parsed_background_path"
       max-height="300px"
     />
     <div v-else class="background-gradient rounded-lg" />
+
+    <v-row
+      class="my-2 justify-end"
+      no-gutters
+      v-if="!isMyAccount && !isAlreadyFriend"
+    >
+      <v-btn
+        color="primary"
+        :loading="$apolloGlobalLoading"
+        small
+        v-if="!isAlreadyInvited"
+        @click="addToFriendsList"
+      >
+        <v-icon>
+          mdi-account-plus-outline
+        </v-icon>
+        Dodaj Znajomego
+      </v-btn>
+
+      <v-btn
+        color="danger"
+        :loading="$apolloGlobalLoading"
+        small
+        v-if="isAlreadyInvited"
+        @click="cancelInvitation"
+      >
+        <v-icon>
+          mdi-account-remove-outline
+        </v-icon>
+        Anuluj zaproszenie
+      </v-btn>
+    </v-row>
+
     <div class="">
       <v-row justify="center">
         <v-avatar size="200" class="profile-img">
@@ -40,28 +73,6 @@
               {{ user.posts.length }}
             </span>
           </v-row>
-        </div>
-
-        <div class="actions" v-if="!isMyAccount && !isAlreadyFriend">
-          <v-btn
-            color="primary"
-            :loading="$apolloGlobalLoading"
-            small
-            v-if="!isAlreadyInvited"
-            @click="addToFriendsList"
-          >
-            Dodaj Znajomego
-          </v-btn>
-
-          <v-btn
-            color="primary"
-            :loading="$apolloGlobalLoading"
-            small
-            v-if="isAlreadyInvited"
-            @click="cancelInvitation"
-          >
-            Anuluj zaproszenie
-          </v-btn>
         </div>
       </div>
     </div>
@@ -136,12 +147,6 @@ export default {
   margin-top: -100px;
   border: #cbd5e0 4px solid;
   margin-bottom: 1.5rem;
-}
-
-.actions {
-  justify-self: end;
-  justify-content: end;
-  justify-items: end;
 }
 
 .background-gradient {

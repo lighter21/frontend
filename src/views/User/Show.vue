@@ -2,58 +2,6 @@
   <div>
     <v-container fluid>
       <profile-heading-section :user="user"></profile-heading-section>
-<!--      <v-col lg="6" md="8" sm="12" align-self="center" class="mx-auto">-->
-<!--        <v-row>-->
-<!--          <v-avatar size="200" color="primary" class="fill-height my-auto">-->
-<!--            <img-->
-<!--              :loading="$apolloGlobalLoading"-->
-<!--              :src="user.parsed_avatar_path"-->
-<!--              alt="John"-->
-<!--            />-->
-<!--          </v-avatar>-->
-
-<!--          <v-col class="mx-6" align-self="center">-->
-<!--            <v-row justify="space-between">-->
-<!--              <p class="title">-->
-<!--                {{ getUserFullName() }}-->
-<!--              </p>-->
-<!--              <v-btn-->
-<!--                color="primary"-->
-<!--                :loading="$apolloGlobalLoading"-->
-<!--                small-->
-<!--                v-if="!isMyAccount() && !isAlreadyInvited"-->
-<!--                @click="addToFriendsList"-->
-<!--              >-->
-<!--                Dodaj Znajomego-->
-<!--              </v-btn>-->
-
-<!--              <v-btn-->
-<!--                color="primary"-->
-<!--                :loading="$apolloGlobalLoading"-->
-<!--                small-->
-<!--                v-if="!isMyAccount() && isAlreadyInvited"-->
-<!--                @click="cancelInvitation"-->
-<!--              >-->
-<!--                Anuluj zaproszenie-->
-<!--              </v-btn>-->
-<!--            </v-row>-->
-
-<!--            <v-row class="my-3">-->
-<!--              <div class="subtitle-1" v-if="!$apolloGlobalLoading">-->
-<!--                {{ user.posts.length }} postów-->
-<!--              </div>-->
-<!--              <div class="mx-4 subtitle-1">88 Znajomych</div>-->
-<!--              <div class="subtitle-1">7 Zdjęć</div>-->
-<!--            </v-row>-->
-<!--            <v-row class="subtitle-2">-->
-<!--              Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-<!--              Blanditiis et inventore maiores praesentium quidem recusandae-->
-<!--              reiciendis, repellendus. Consectetur eligendi error esse facilis-->
-<!--              nobis nulla, officiis quibusdam quo sed suscipit vitae!-->
-<!--            </v-row>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--      </v-col>-->
     </v-container>
     <v-tabs v-model="tab" centered background-color="#282b35" dark>
       <v-tabs-slider v-model="tab" color="primary"></v-tabs-slider>
