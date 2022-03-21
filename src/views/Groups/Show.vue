@@ -158,10 +158,7 @@ export default {
     },
   },
   mounted() {
-    this.date = moment(this.group.created_at).format("DD.MM.YYYY");
-
-      this.$apollo.queries.group.refetch()
-
+      this.$apollo.queries.group.refetch().then(() =>     this.date = moment(this.group.created_at).format("DD.MM.YYYY"))
   }
 };
 </script>

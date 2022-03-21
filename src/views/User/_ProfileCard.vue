@@ -28,13 +28,13 @@
           block
           v-if="!showingFriends"
           @click="sendFriendsInvitation"
-          :disabled="isAlreadyInvited"
+          :disabled="isAlreadyInvited || invitationSend"
         >
           Dodaj do znajomych
         </v-btn>
         <v-btn color="" block :to="`/user/${user.username}`"
-          >Zobacz profil</v-btn
-        >
+          >Zobacz profil
+        </v-btn>
       </v-col>
     </v-card-actions>
   </v-card>
@@ -53,8 +53,8 @@ export default {
     },
     showingFriends: {
       type: Boolean,
-      default: () => false
-    }
+      default: () => false,
+    },
   },
   computed: {
     ...mapState({
@@ -70,16 +70,21 @@ export default {
       return this.user.id == this.me.id;
     },
   },
+  data: () => ({
+    invitationSend: false,
+  }),
   methods: {
     sendFriendsInvitation() {
-      this.$apollo.mutate({
-        mutation: UPDATE_OR_CREATE_FRIEND,
-        variables: {
-          id: this.me.id,
-          friend_id: this.user.id,
-          status: StatusType.Pending.status,
-        },
-      });
+      this.$apollo
+        .mutate({
+          mutation: UPDATE_OR_CREATE_FRIEND,
+          variables: {
+            id: this.me.id,
+            friend_id: this.user.id,
+            status: StatusType.Pending.status,
+          },
+        })
+        .then(() => (this.invitationSend = true));
     },
   },
 };

@@ -27,7 +27,7 @@
       </v-btn>
 
       <v-btn
-        color="danger"
+        color="error"
         :loading="$apolloGlobalLoading"
         small
         v-if="isAlreadyInvited"
